@@ -250,7 +250,7 @@ class ParseTree(object):
         #
         from tagmap import TagMap
         #
-        def asDict(st, parent=None, level=0, isLastChild=False):
+        def asDict(st, parent=None, level=0, isLastChild=True):
             height[0] = max(height[0], level)
             if not showAllLevels:
                 # elide degenerate tree nodes (those with singleton children)
@@ -280,7 +280,7 @@ class ParseTree(object):
                 tm = TagMap.POS_labels.get(word + ":" + tag)
                 tagLabel = (tm.posLabel if tm else TagMap.partsOfSpeech.get(tag)[0]).split('\n')
                 # add word definition for nouns & verbs if available
-                if tag[0] in ('V', 'N') and word in wordDefs:
+                if tag[0] in ('V', 'N', 'M') and word in wordDefs:
                     tagLabel.append(wordDefs[word])
                 node = dict(type='word', word=word, tag=tag, tagLabel=tagLabel, children=[], parent=parent, level=-1, layer=0)
                 nodeID = nodeIDs.get(id(node))
@@ -333,9 +333,12 @@ def grammarRule(rule):
             # found prior parsing of requested rule at this phoneme, push lexer past prior parsing & return prior parsing
             parsing, endMark = priorParse
             self.lexer.backTrackTo(endMark)
+            # if self.verbose > 0:
+            #     traceBack = " -> ".join(r.__name__ for r, m in reversed(self.recursionState))
+            #     print(indent, '**** found', parsing[0], 'at', startToken, traceBack)
             return parsing
         #
-        if self.verbose > 2:
+        if self.verbose > 1:
             print(indent, '--- at ', self.lexer.posList[self.lexer.cursor], 'looking for ', rule.__name__)
         # recursion into the same rule at the same token implies match failure (for now).  Recursive rules should generally be right-recursive.
         if (rule, startMark) in self.recursionState:
@@ -356,7 +359,7 @@ def grammarRule(rule):
             if not node:
                 self.fails[startMark].add(rule) # note we failed this production at this point to break later recursive attempts at same thing
                 self.lexer.backTrackTo(startMark)
-                if self.verbose > 1:
+                if self.verbose > 2:
                     print(indent, '    nope, backtracking to ', self.lexer.posList[self.lexer.cursor])
                 parsing = []
             else:
@@ -394,16 +397,18 @@ def anyOneOf(*options):
     longest = None; length = 0
     for i, o in enumerate(options):
         node = o.__next__()
-        if node and node[0] != ParseTree.nullNode:
+        if node and not all(n == ParseTree.nullNode for n in node):
             l = sum(n.terminalSpan() for n in node)
             if not longest or l > length:
                 longest, length = node, l
             # restart matching
-            node[0].lexer.backTrackTo(node[0].startMark)
+            first = [n for n in node if n != ParseTree.nullNode][0]
+            first.lexer.backTrackTo(first.startMark)
     #
     if longest:
         # seek to end of selected longes match
-        longest[0].lexer.backTrackTo(longest[-1].endMark)
+        seq = [n for n in longest if n != ParseTree.nullNode]
+        seq[0].lexer.backTrackTo(seq[-1].endMark)
         return longest
 
 def oneOrMore(rule):

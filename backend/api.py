@@ -116,14 +116,15 @@ def tranlsate():
 
 # ---------  API utility functions ---------------
 
-def parseInput(input, parser="RD", showAllLevels=False):
+def parseInput(input, parser="RD", showAllLevels=False, getWordDefinitions=True):
     "parse input string into list of parsed contained sentence structures"
     # parser can be RD for recusrsive descent (currently the most-developed) or "NLTK" for the original NLTK chunking-grammar parser
 
-    # build a string for the KHaiii phoneme analyzer
+    # clean & build a string for the KHaiii phoneme analyzer
     input = input.strip()
     if input[-1] not in ['.', '?', '!']:
         input += '.'
+    input = re.sub(r'\s+([\.\?\;\,\:])', r'\1', input)  # elide spaces preceding clause endings, throws Khaiii off
     # input = input.replace(',', ' , ').replace(';', ' ; ').replace(':', ' : ') - adding a space before punctuation seems to mess tagging in Khaiii
     log("* parse {0}".format(input))
 
@@ -170,7 +171,7 @@ def parseInput(input, parser="RD", showAllLevels=False):
                 # build descriptive phrase list
                 phrases = parseTree.phraseList()
                 # get noun & verb translations from Naver
-                wordDefs = getWordDefs(mappedPosList)
+                wordDefs = getWordDefs(mappedPosList) if getWordDefinitions else {}
                 # build JSONable parse-tree dict
                 parseTreeDict = parseTree.buildParseTree(wordDefs=wordDefs, showAllLevels=showAllLevels)
                 log("  {0}".format(parseTree))
@@ -294,11 +295,11 @@ def getTranslation(s):
     return translatedText, failReason
 
 def getWordDefs(mappedPosList):
-    "retrieve definitions for nouns & verbs from Naver"
+    "retrieve definitions for nouns, verbs & adverbs from Naver"
     # pl = [(wpos.split(':')[0], wpos.split(':')[1]) for wpos in posList.split(';')]
     pl = mappedPosList
-    wordsToTranslate = [w + ('다' if pos[0] == 'V' else '') for w, pos in pl if pos[0] in ('V', 'N')]
-    words = [w for w, pos in pl if pos[0] in ('V', 'N')]
+    wordsToTranslate = [w + ('다' if pos[0] == 'V' else '') for w, pos in pl if pos[0] in ('V', 'N', 'M')]
+    words = [w for w, pos in pl if pos[0] in ('V', 'N', 'M')]
     translatedText, failReason = getTranslation('\n'.join(wordsToTranslate))
     if failReason:
         return {}
@@ -371,7 +372,12 @@ khaiii의 빌드 및 설치에 관해서는 빌드 및 설치 문서를 참고�
 창문 열어도 돼요?
 
 중국음식을 먹었다. 중국음식을 좋아하기 때문이에요.      중국음식을 먹었다. 왜냐하면 중국음식을 좋아하기 때문이에요.  (written)
-중국 음식을 좋아하기 때문에 중국 음식을 먹었어요. 중국 음식을 좋아하기 때문에 중국 음식을 많이 먹을 거예요.   중국 음식은 좋아하기 때문에 중국 음식을 먹었어요. <---  up to here with new grammar
+중국 음식을 좋아하기 때문에 중국 음식을 먹었어요. 중국 음식을 좋아하기 때문에 중국 음식을 많이 먹을 거예요.   중국 음식은 좋아하기 때문에 중국 음식을 먹었어요. 
+저는 호주인입니다. 하지만 캘리포니아에 살아요.
+       저는 호주인입니다, 하지만 캘리포니아에 살아요
+       제일 맛있는 것 추천해 주세요.  
+쉽지가 않아요.
+       <---  up to here with new grammar
 여기 오기 전에 뭐 했어요?     
   밥을 먹은 후에 손을 씻는다.     
   그는 일하기 전에 달렸다.
@@ -443,14 +449,12 @@ multiple-clause examples (아/어서, ~면, ...)
 병아리나 물고기도 키워 본 적 없어요?  - gets 키워 본 intermixed wrongly
 
 Fails:
-저는 호주인입니다. 하지만 캘리포니아에 살이에요.
-       저는 호주인입니다, 하지만 캘리포니아에 살이에요
-제일 맛있는 것 추천해 주세요.
 나는 일하러 달려갈 것이다. 그렇지 않으면 나는 거기에 차를 몰고 갈 것이다.   - the "그렇지 않으면" is just "Or,"
 추우면 못 뛰니까 안 뛰겠다.  - two conditionals in one sentene
 제일 맛있는 것 추천해 주세요
 스티브는 "안녕하세요"라고 했어요.  - quoting, but need examples with embedded phrases, and in <>, 
   교수님은 나에게 “무엇을 일하든지 열심히 일하는 것은 제일 중요하잖아”라고 가르쳐 주셨어요.
+나는 뭐, 심각한 일이라고.  - comma should be in first phrase
   
 To try:
 가방을 산다고 말했어요?
