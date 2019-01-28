@@ -52,7 +52,8 @@ testSentences = [
     "중국 음식은 좋아하기 때문에 중국 음식을 먹었어요.",
     "저는 호주인입니다. 하지만 캘리포니아에 살아요.",
     "저는 호주인입니다, 하지만 캘리포니아에 살아요.",
-    "제일 맛있는 것 추천해 주세요."
+    "제일 맛있는 것 추천해 주세요.",
+    "쉽지가 않아요."
 ]
 
 # "사실이 아니라고 몇 번을 해명했지만 통하지 않았다.",
@@ -87,7 +88,7 @@ def test():
         if not ref:
             missing.append(s)
         else:
-            if not matchParse(ref['tree'], parse['parseTree']['tree']):
+            if not parse['parseTree'] or not matchParse(ref['tree'], parse['parseTree']['tree']):
                 fails.append(s)
     #
     return fails, missing
@@ -98,9 +99,10 @@ def matchParse(p1, p2):
         return False
     if p1['type'] == 'tree':
         for c1, c2 in zip(p1['children'], p2['children']):
-            return matchParse(c1, c2)
+            if not matchParse(c1, c2):
+                return False
     else:
-        if p1['word'] != p2['word'] or p1['tag'].split('_')[0] != p1['tag'].split('_')[0]:   # ignore differing synth tag numbers
+        if p1['word'] != p2['word'] or p1['tag'].split('_')[0] != p2['tag'].split('_')[0]:   # ignore differing synth tag numbers
             return False
     return True
 

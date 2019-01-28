@@ -376,7 +376,7 @@ khaiii의 빌드 및 설치에 관해서는 빌드 및 설치 문서를 참고�
 저는 호주인입니다. 하지만 캘리포니아에 살아요.
        저는 호주인입니다, 하지만 캘리포니아에 살아요
        제일 맛있는 것 추천해 주세요.  
-
+쉽지가 않아요.
        <---  up to here with new grammar
 여기 오기 전에 뭐 했어요?     
   밥을 먹은 후에 손을 씻는다.     
@@ -449,7 +449,6 @@ multiple-clause examples (아/어서, ~면, ...)
 병아리나 물고기도 키워 본 적 없어요?  - gets 키워 본 intermixed wrongly
 
 Fails:
-
 나는 일하러 달려갈 것이다. 그렇지 않으면 나는 거기에 차를 몰고 갈 것이다.   - the "그렇지 않으면" is just "Or,"
 추우면 못 뛰니까 안 뛰겠다.  - two conditionals in one sentene
 제일 맛있는 것 추천해 주세요

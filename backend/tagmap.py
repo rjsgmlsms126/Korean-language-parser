@@ -339,8 +339,8 @@ tm(  # numbers
     tagPat=r'(.*):NR', repl=r'\1:NUM', basePOS="NR", posLabel="Number",
 )
 
-tm(  # V 지:EC negation connector  NEC.*
-    tagPat=r'(지):EC', repl=r'\1:NEC', basePOS="EC", posLabel="Negation\nConnector",
+tm(  # V 지:EC negation connector  JNEC.*
+    tagPat=r'(지):EC', repl=r'\1:JNEC', basePOS="EC", posLabel="Negation\nConnector",
 )
 
 # ----- dependent (aka bound) noun forms --------  map to DNF.* + DependentNounForm node rename

@@ -48,8 +48,7 @@ class KoreanParser(Parser):
     def predicate(self):
         "predicate"
         # predicate ::= verbPhrase ENDING_SUFFIX
-        p = sequence(self.verbPhrase(),
-                     self.endingSuffix())
+        p = sequence(self.verbPhrase(), self.endingSuffix())
         return p
 
     @grammarRule
@@ -181,11 +180,10 @@ class KoreanParser(Parser):
     @grammarRule
     def verbPhrase(self):
         "parse a verb phrase"
-        vp = anyOneOf(option(sequence(zeroOrMore(self.adverbial),
-                                      anyOneOf(option(self.verb), option(self.verbAndAuxiliary)),
-                                      optional(self.nominallVerbForm),
-                                      zeroOrMore(self.verbSuffix))),
-                      option(self.negativeVerbPhrase))
+        vp = sequence(zeroOrMore(self.adverbial),
+                      anyOneOf(option(self.verb), option(self.verbAndAuxiliary)),
+                      optional(self.nominallVerbForm),
+                      zeroOrMore(self.verbSuffix))
         return vp
 
     @grammarRule
@@ -205,16 +203,6 @@ class KoreanParser(Parser):
     def simpleAdverb(self):
         sa = self.lexer.next(r'.*:(MAG.*)')
         return sa
-
-    @grammarRule
-    def negativeVerbPhrase(self):
-        nvp = sequence(zeroOrMore(self.adverbial),
-                       anyOneOf(option(self.verb), option(self.verbAndAuxiliary)),
-                       self.lexer.next(r'.*:(JNEC.*)'), # 지
-                       optional(self.lexer.next(r'.*:(JKS|JKO|TOP.*)')),  # ~지 modifiers
-                       self.verb(),
-                       zeroOrMore(self.verbSuffix))
-        return nvp
 
     @grammarRule
     def possessive(self):
@@ -251,7 +239,13 @@ class KoreanParser(Parser):
 
     @grammarRule
     def auxiliaryVerbConnector(self):
-        return self.lexer.next(r'.*:(EC)')
+        return anyOneOf(option(self.negativeVerbConnector),
+                        option(self.lexer.next(r'.*:(EC)')))
+
+    @grammarRule
+    def negativeVerbConnector(self):
+        return sequence(self.lexer.next(r'.*:(NEC.*)'),
+                        optional(self.lexer.next(r'.*:(JKS|JKO|TOP.*)')))  # ~지 modifiers
 
     @grammarRule
     def auxiliaryVerbPattern(self):

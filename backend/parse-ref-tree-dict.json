@@ -4920,7 +4920,7 @@
       "type": "tree",
       "tag": "Sentence",
       "level": 0,
-      "layer": 5,
+      "layer": 4,
       "parent": null,
       "children": [
         {
@@ -4928,7 +4928,7 @@
           "tag": "Subordinate Clause",
           "level": 1,
           "layer": 2,
-          "parent": 26,
+          "parent": 24,
           "children": [
             {
               "type": "tree",
@@ -5003,7 +5003,7 @@
           "tag": "Subordinate Clause",
           "level": 1,
           "layer": 3,
-          "parent": 26,
+          "parent": 24,
           "children": [
             {
               "type": "tree",
@@ -5122,75 +5122,55 @@
           "type": "tree",
           "tag": "Predicate",
           "level": 1,
-          "layer": 4,
-          "parent": 26,
+          "layer": 2,
+          "parent": 24,
           "children": [
             {
               "type": "tree",
-              "tag": "Verb Phrase",
+              "tag": "Negative Verb Phrase",
               "level": 2,
-              "layer": 3,
-              "parent": 25,
+              "layer": 1,
+              "parent": 23,
               "children": [
                 {
-                  "type": "tree",
-                  "tag": "Verb And Auxiliary",
-                  "level": 3,
-                  "layer": 2,
-                  "parent": 23,
-                  "children": [
-                    {
-                      "type": "word",
-                      "word": "\ud1b5\ud558",
-                      "tag": "VV",
-                      "tagLabel": [
-                        "Verb"
-                      ],
-                      "children": [],
-                      "parent": 21,
-                      "level": -1,
-                      "layer": 0,
-                      "id": 17
-                    },
-                    {
-                      "type": "tree",
-                      "tag": "Auxiliary Verb",
-                      "level": 4,
-                      "layer": 1,
-                      "parent": 21,
-                      "children": [
-                        {
-                          "type": "word",
-                          "word": "\uc9c0",
-                          "tag": "NEC_4",
-                          "tagLabel": [
-                            "Negation",
-                            "Connector"
-                          ],
-                          "children": [],
-                          "parent": 20,
-                          "level": -1,
-                          "layer": 0,
-                          "id": 18
-                        },
-                        {
-                          "type": "word",
-                          "word": "\uc54a",
-                          "tag": "VX",
-                          "tagLabel": [
-                            "Verb"
-                          ],
-                          "children": [],
-                          "parent": 20,
-                          "level": -1,
-                          "layer": 0,
-                          "id": 19
-                        }
-                      ],
-                      "id": 20
-                    }
+                  "type": "word",
+                  "word": "\ud1b5\ud558",
+                  "tag": "VV",
+                  "tagLabel": [
+                    "Verb"
                   ],
-                  "id": 21
+                  "children": [],
+                  "parent": 21,
+                  "level": -1,
+                  "layer": 0,
+                  "id": 17
+                },
+                {
+                  "type": "word",
+                  "word": "\uc9c0",
+                  "tag": "JNEC_4",
+                  "tagLabel": [
+                    "Negation",
+                    "Connector"
+                  ],
+                  "children": [],
+                  "parent": 21,
+                  "level": -1,
+                  "layer": 0,
+                  "id": 18
+                },
+                {
+                  "type": "word",
+                  "word": "\uc54a",
+                  "tag": "VX",
+                  "tagLabel": [
+                    "Verb"
+                  ],
+                  "children": [],
+                  "parent": 21,
+                  "level": -1,
+                  "layer": 0,
+                  "id": 19
                 },
                 {
                   "type": "word",
@@ -5201,13 +5181,13 @@
                     "Marker"
                   ],
                   "children": [],
-                  "parent": 23,
+                  "parent": 21,
                   "level": -1,
                   "layer": 0,
-                  "id": 22
+                  "id": 20
                 }
               ],
-              "id": 23
+              "id": 21
             },
             {
               "type": "word",
@@ -5218,16 +5198,16 @@
                 "Ending"
               ],
               "children": [],
-              "parent": 25,
+              "parent": 23,
               "level": -1,
               "layer": 0,
-              "id": 24
+              "id": 22
             }
           ],
-          "id": 25
+          "id": 23
         }
       ],
-      "id": 26
+      "id": 24
     },
     "layers": [
       [
@@ -5244,29 +5224,25 @@
         17,
         18,
         19,
-        22,
-        24
+        20,
+        22
       ],
       [
         3,
         9,
         14,
-        20
+        21
       ],
       [
         6,
         11,
-        21
-      ],
-      [
-        16,
         23
       ],
       [
-        25
+        16
       ],
       [
-        26
+        24
       ]
     ]
   },
@@ -5559,15 +5535,65 @@
           "children": [
             {
               "type": "tree",
-              "tag": "Verb And Auxiliary",
+              "tag": "Negative Verb Phrase",
               "level": 2,
               "layer": 2,
               "parent": 11,
               "children": [
                 {
+                  "type": "tree",
+                  "tag": "Verb And Auxiliary",
+                  "level": 3,
+                  "layer": 1,
+                  "parent": 9,
+                  "children": [
+                    {
+                      "type": "word",
+                      "word": "\ubc30\uc6b0",
+                      "tag": "VV",
+                      "tagLabel": [
+                        "Verb"
+                      ],
+                      "children": [],
+                      "parent": 6,
+                      "level": -1,
+                      "layer": 0,
+                      "id": 4
+                    },
+                    {
+                      "type": "word",
+                      "word": "\uace0 \uc2f6",
+                      "tag": "AUX_29",
+                      "tagLabel": [
+                        "Want to"
+                      ],
+                      "children": [],
+                      "parent": 6,
+                      "level": -1,
+                      "layer": 0,
+                      "id": 5
+                    }
+                  ],
+                  "id": 6
+                },
+                {
                   "type": "word",
-                  "word": "\ubc30\uc6b0",
-                  "tag": "VV",
+                  "word": "\uc9c0",
+                  "tag": "JNEC_4",
+                  "tagLabel": [
+                    "Negation",
+                    "Connector"
+                  ],
+                  "children": [],
+                  "parent": 9,
+                  "level": -1,
+                  "layer": 0,
+                  "id": 7
+                },
+                {
+                  "type": "word",
+                  "word": "\uc54a",
+                  "tag": "VX",
                   "tagLabel": [
                     "Verb"
                   ],
@@ -5575,56 +5601,6 @@
                   "parent": 9,
                   "level": -1,
                   "layer": 0,
-                  "id": 4
-                },
-                {
-                  "type": "word",
-                  "word": "\uace0 \uc2f6",
-                  "tag": "AUX_29",
-                  "tagLabel": [
-                    "Want to"
-                  ],
-                  "children": [],
-                  "parent": 9,
-                  "level": -1,
-                  "layer": 0,
-                  "id": 5
-                },
-                {
-                  "type": "tree",
-                  "tag": "Auxiliary Verb",
-                  "level": 3,
-                  "layer": 1,
-                  "parent": 9,
-                  "children": [
-                    {
-                      "type": "word",
-                      "word": "\uc9c0",
-                      "tag": "NEC_4",
-                      "tagLabel": [
-                        "Negation",
-                        "Connector"
-                      ],
-                      "children": [],
-                      "parent": 8,
-                      "level": -1,
-                      "layer": 0,
-                      "id": 6
-                    },
-                    {
-                      "type": "word",
-                      "word": "\uc54a",
-                      "tag": "VX",
-                      "tagLabel": [
-                        "Verb"
-                      ],
-                      "children": [],
-                      "parent": 8,
-                      "level": -1,
-                      "layer": 0,
-                      "id": 7
-                    }
-                  ],
                   "id": 8
                 }
               ],
@@ -5656,13 +5632,13 @@
         2,
         4,
         5,
-        6,
         7,
+        8,
         10
       ],
       [
         3,
-        8
+        6
       ],
       [
         9
@@ -9493,6 +9469,111 @@
       ],
       [
         15
+      ]
+    ]
+  },
+  "\uc27d\uc9c0\uac00 \uc54a\uc544\uc694.": {
+    "tree": {
+      "type": "tree",
+      "tag": "Predicate",
+      "level": 0,
+      "layer": 2,
+      "parent": null,
+      "children": [
+        {
+          "type": "tree",
+          "tag": "Negative Verb Phrase",
+          "level": 1,
+          "layer": 1,
+          "parent": 7,
+          "children": [
+            {
+              "type": "word",
+              "word": "\uc27d",
+              "tag": "VA",
+              "tagLabel": [
+                "Adjective"
+              ],
+              "children": [],
+              "parent": 5,
+              "level": -1,
+              "layer": 0,
+              "id": 1
+            },
+            {
+              "type": "word",
+              "word": "\uc9c0",
+              "tag": "JNEC_4",
+              "tagLabel": [
+                "Negation",
+                "Connector"
+              ],
+              "children": [],
+              "parent": 5,
+              "level": -1,
+              "layer": 0,
+              "id": 2
+            },
+            {
+              "type": "word",
+              "word": "\uac00",
+              "tag": "JKS",
+              "tagLabel": [
+                "Subject",
+                "Marker"
+              ],
+              "children": [],
+              "parent": 5,
+              "level": -1,
+              "layer": 0,
+              "id": 3
+            },
+            {
+              "type": "word",
+              "word": "\uc54a",
+              "tag": "VX",
+              "tagLabel": [
+                "Verb"
+              ],
+              "children": [],
+              "parent": 5,
+              "level": -1,
+              "layer": 0,
+              "id": 4
+            }
+          ],
+          "id": 5
+        },
+        {
+          "type": "word",
+          "word": "\uc544\uc694",
+          "tag": "EF",
+          "tagLabel": [
+            "Polite",
+            "Ending"
+          ],
+          "children": [],
+          "parent": 7,
+          "level": -1,
+          "layer": 0,
+          "id": 6
+        }
+      ],
+      "id": 7
+    },
+    "layers": [
+      [
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      [
+        5
+      ],
+      [
+        7
       ]
     ]
   }
