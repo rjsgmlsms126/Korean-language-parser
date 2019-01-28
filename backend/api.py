@@ -452,5 +452,8 @@ Fails:
 스티브는 "안녕하세요"라고 했어요.  - quoting, but need examples with embedded phrases, and in <>, 
   교수님은 나에게 “무엇을 일하든지 열심히 일하는 것은 제일 중요하잖아”라고 가르쳐 주셨어요.
   
+To try:
+가방을 산다고 말했어요?
+지원이가 한국에서 여행하러 가겠다고 그랬어요
 
 """
