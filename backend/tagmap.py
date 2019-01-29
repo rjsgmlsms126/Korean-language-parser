@@ -540,6 +540,15 @@ tm( # 고 싶다 want-to auxiliary form
     notes="",
 )
 
+tm( # ~고 있다 progressive auxiliary form
+    tagPat=r'고:EC;있:VX', repl=r'고 있:AUX',
+    basePOS="VX", posLabel="Progressive\nAuxiliary", descr="V-ing, progressive verb form",
+    wikiKey="고",
+    refs={"ttmik": "/level-2-lesson-10", "htsk": "/unit1/unit-1-lessons-17-25-2/lesson-18/#ppt"},
+    notes="",
+)
+
+
 # A/V + 아/어 버리다
 #
 
