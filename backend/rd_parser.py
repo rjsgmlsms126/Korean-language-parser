@@ -470,10 +470,10 @@ class Parser(object):
         "begin parse, return ParseTree root node"
         self.verbose = verbose
         #
-        s = self.sentence()
-        if s:
-            s[0].pprint()
-            return s[0] # returns as a singleton list
+        parsing = self.input()
+        if parsing:
+            parsing[0].pprint()
+            return parsing[0] # returns as a singleton list
 
     def makeNode(self, label, startMark, constituents):
         "makes a node with given label & constituents as children"

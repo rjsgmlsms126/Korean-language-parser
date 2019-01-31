@@ -13,6 +13,14 @@ class KoreanParser(Parser):
     # -----------  grammar rules ---------
 
     @grammarRule
+    def input(self):
+        "parse valid input"
+        # we'll accept either a full sentence with predicate or a stand-alone phrase
+        p = anyOneOf(option(self.sentence),
+                     option(self.phrase))
+        return p
+
+    @grammarRule
     def sentence(self):
         "parses top-level sentence"
         # sentence ::=  [subordinateClause]* mainClause
