@@ -75,3 +75,4 @@ static/dist
 
 # Khaiii install (needs to be build on each box)
 khaiii/
+backend/rd_grammar copy.py

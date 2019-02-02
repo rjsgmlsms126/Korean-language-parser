@@ -6,7 +6,7 @@
             <!-- header row -->
             <div id="input-row" class="k-flexrow ">
                 <div id="input-title" >Korean sentence parser</div>
-                <div id="attribution">v0.7.9 - <a href="mailto:johnw3d@gmail.com">JBW</a> - based on the <a href="https://github.com/kakao/khaiii">Kakao Hangul Analyzer III</a> and JBW's phrase parser</div>
+                <div id="attribution">v0.8.0 - <a href="mailto:johnw3d@gmail.com">JBW</a> - based on the <a href="https://github.com/kakao/khaiii">Kakao Hangul Analyzer III</a> and JBW's phrase parser</div>
             </div>
             <!-- input row -->
             <div class="k-flexrow">
@@ -44,7 +44,7 @@
                 <div v-for="s in sentences">
                     <template v-if="s.error">
                         <div class="k-flexrow parse-fail-msg"> {{ s.error }} </div>
-                        <div class="k-flexrow parse-fail-unrec">Unreconized: {{ s.lastToken.split(':')[0] }}</div>
+                        <!-- div class="k-flexrow parse-fail-unrec">Unreconized: {{ s.lastToken.split(':')[0] }}</div -->
                         <div class="k-flexrow parse-fail-poslist">
                             Parts of speech:
                             <span v-for="pos in s.posList">
@@ -52,6 +52,7 @@
                                 <span class="parse-fail-tag">{{ pos.split(':')[1] }}, </span>
                             </span>
                         </div>
+                        <div class="k-flexrow parse-fail-log"><pre>{{ s.log }}</pre></div>
                     </template>
                     <tenplate v-else>
                         <div class="output-row k-flexrow k-table">
@@ -783,11 +784,16 @@ document.onmouseup = function (e) {
         color: red;
         font-size: 18px;
         padding-left: 30px;
+        padding-bottom: 10px;
     }
     .parse-fail-unrec {
         font-size: 16px;
         padding-left: 30px;
         color: rgb(82, 82, 82);;
+    }
+    .parse-fail-log {
+        font-size: 12px;
+        padding-left: 30px;
     }
     .parse-fail-poslist {
         color: rgb(82, 82, 82);;

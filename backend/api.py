@@ -162,7 +162,8 @@ def parseInput(input, parser="RD", showAllLevels=False, getWordDefinitions=True)
         else:  # recursive-descent parser
             from rd_grammar import KoreanParser
             parser = KoreanParser([":".join(p) for p in mappedPosList])
-            parseTree = parser.parse(verbose=1)
+            result = parser.parse(verbose=1)
+            parseTree = result.get('parseTree')
             if parseTree:
                 # apply any synthetic-tag-related node renamings
                 parseTree.mapNodeNames()
@@ -178,9 +179,9 @@ def parseInput(input, parser="RD", showAllLevels=False, getWordDefinitions=True)
             else:
                 # parsing failed, return unrecognized token
                 parseTree = references = parseTreeDict = phrases = None
-                s.update(dict(error="Sorry, failed to parse sentence",
-                              lastToken=parser.lastTriedToken()))
-                log("  ** failed.  Unexpected token {0}".format(parser.lastTriedToken()))
+                s.update(dict(error=result['error'], log=result['log']))
+                log("*** failed, log:")
+                log(result['log'])
 
         # format debugging daat
         debugging = dict(posList=pformat(s['posList']),
@@ -449,6 +450,7 @@ multiple-clause examples (아/어서, ~면, ...)
 병아리나 물고기도 키워 본 적 없어요?  - gets 키워 본 intermixed wrongly
 
 Fails:
+중국 음식을 좋아하기 - not a complete sentence, but declared ok by grammar checker,  note the 을 makes it more than one phrase, but accepting more overrides sentence
 나는 일하러 달려갈 것이다. 그렇지 않으면 나는 거기에 차를 몰고 갈 것이다.   - the "그렇지 않으면" is just "Or,"
 추우면 못 뛰니까 안 뛰겠다.  - two conditionals in one sentene
 제일 맛있는 것 추천해 주세요

@@ -3,7 +3,8 @@
 #
 __author__ = 'jwainwright'
 
-import functools, re
+import functools, re, sys
+from io import StringIO
 from collections import defaultdict
 
 #  This is an alternative to the nltk chunking approach, allowing more contextual control over parsing
@@ -122,14 +123,14 @@ class ParseTree(object):
     def isEmpty(self):
         return len(self.children) == 0
 
-    def pprint(self, level=0, closer=''):
+    def pprint(self, level=0, closer='', file=sys.stdout):
         indent = '  ' * level
         if self.isEmpty():
-            print(indent + self.label + closer)
+            print(indent + self.label + closer, file=file)
         else:
-            print(indent + self.label + ' (')
+            print(indent + self.label + ' (', file=file)
             for c in self.children:
-                c.pprint(level + 1, closer + (')' if c == self.children[-1] else ''))
+                c.pprint(level + 1, closer + (')' if c == self.children[-1] else ''), file=file)
 
     def mapNodeNames(self):
         "maps ParseTree node names under tag-mapping 'nodeRename' definitions"
@@ -335,15 +336,15 @@ def grammarRule(rule):
             self.lexer.backTrackTo(endMark)
             # if self.verbose > 0:
             #     traceBack = " -> ".join(r.__name__ for r, m in reversed(self.recursionState))
-            #     print(indent, '**** found', parsing[0], 'at', startToken, traceBack)
+            #     self.log(indent, '* found', parsing[0], 'at', startToken, traceBack)
             return parsing
         #
         if self.verbose > 1:
-            print(indent, '--- at ', self.lexer.posList[self.lexer.cursor], 'looking for ', rule.__name__)
+            self.log(indent, '--- at ', self.lexer.posList[self.lexer.cursor], 'looking for ', rule.__name__)
         # recursion into the same rule at the same token implies match failure (for now).  Recursive rules should generally be right-recursive.
         if (rule, startMark) in self.recursionState:
             if self.verbose > 2:
-                print(indent, '    recursion on same token encountered, failing')
+                self.log(indent, '    recursion on same token encountered, failing')
             parsing = []
         else:
             # track recursion
@@ -360,12 +361,12 @@ def grammarRule(rule):
                 self.fails[startMark].add(rule) # note we failed this production at this point to break later recursive attempts at same thing
                 self.lexer.backTrackTo(startMark)
                 if self.verbose > 2:
-                    print(indent, '    nope, backtracking to ', self.lexer.posList[self.lexer.cursor])
+                    self.log(indent, '    nope, backtracking to ', self.lexer.posList[self.lexer.cursor])
                 parsing = []
             else:
                 traceBack = " -> ".join(r.__name__ for r, m in reversed(self.recursionState))
                 if self.verbose > 0:
-                    print(indent, '**** found', node, 'at', startToken, traceBack)
+                    self.log(indent, '* found', node, 'at', startToken, traceBack)
                 parsing = [node]
                 # cache parse result & it's end-mark
                 self.parsedPhraseCache[(rule, startMark)] = (parsing, self.lexer.mark())
@@ -453,8 +454,10 @@ class Parser(object):
         self.fails = defaultdict(set)  # tracks history of failed profuctions at each cursor position to break recursions
         self.recursionState = []  # tracks recursion state to break recursive rules
         self.parsedPhraseCache = {}
+        self.logIO = StringIO()
         #
-        print(posList)
+        self.log('Input posList:', posList)
+        self.log('\nParse log:')
 
     def mark(self):
         "return marker for current parsing state"
@@ -471,9 +474,32 @@ class Parser(object):
         self.verbose = verbose
         #
         parsing = self.input()
-        if parsing:
-            parsing[0].pprint()
-            return parsing[0] # returns as a singleton list
+        # check
+        result = {}
+        if not parsing:
+            # failed altogether
+            self.log('\n*** parse failed')
+            result['error'] = "Sorry, failed to parse sentence"
+        #
+        elif not self.lexer.peek(r'.*:SF'):
+            # early termination
+            result['error'] = "Sorry, incomplete parsing"
+            self.log('\n*** incomplete parsing, last tried token = ', self.lastTriedToken().__repr__())
+            self.log('\nPartial parseTree:\n'); parsing[0].pprint(file=self.logIO)
+        #
+        else:
+            # all good
+            parsing[0].pprint(file=self.logIO)
+            result['parseTree'] = parsing[0]
+        #
+        result['log'] = self.logIO.getvalue()
+        return result
+
+    def log(self, *args):
+        "log a trace or error msg"
+        # out to both stdout and the log buffer
+        print(*args)
+        print(*args, file=self.logIO)
 
     def makeNode(self, label, startMark, constituents):
         "makes a node with given label & constituents as children"
