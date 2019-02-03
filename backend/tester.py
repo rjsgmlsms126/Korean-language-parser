@@ -95,7 +95,8 @@ def test():
 
 def matchParse(p1, p2):
     "match parse trees, allowing synthetic-tag ordinal mismatch"
-    if p1['type'] != p2['type'] or p1['tag'] != p2['tag'] or len(p1['children']) != len(p2['children']):
+    if p1['type'] != p2['type'] or p1['tag'].split('_')[0] != p2['tag'].split('_')[0] or len(p1['children']) != len(p2['children']):
+        print('mismatch node', p1, p2)
         return False
     if p1['type'] == 'tree':
         for c1, c2 in zip(p1['children'], p2['children']):
@@ -103,6 +104,7 @@ def matchParse(p1, p2):
                 return False
     else:
         if p1['word'] != p2['word'] or p1['tag'].split('_')[0] != p2['tag'].split('_')[0]:   # ignore differing synth tag numbers
+            print('mismatch terminal', p1, p2)
             return False
     return True
 

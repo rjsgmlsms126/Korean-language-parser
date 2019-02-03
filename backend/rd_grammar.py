@@ -17,8 +17,14 @@ class KoreanParser(Parser):
         "parse valid input"
         # we'll accept either a full sentence with predicate or a stand-alone phrase
         p = anyOneOf(option(self.sentence),
-                     option(self.phrase))
+                     option(self.standAlonePhrase))
         return p
+
+    @grammarRule
+    def standAlonePhrase(self):
+        "stand-along phrase"
+        sap = sequence(self.phrase(), optional(self.auxiliaryParticle()))
+        return sap
 
     @grammarRule
     def sentence(self):
@@ -298,7 +304,7 @@ class KoreanParser(Parser):
 
     @grammarRule
     def simpleVerb(self):
-        return self.lexer.next(r'.*:(VV|VX|VND.*)')
+        return self.lexer.next(r'.*:(VV.*|VX|VND.*)')
 
     @grammarRule
     def nominalizingSuffix(self):

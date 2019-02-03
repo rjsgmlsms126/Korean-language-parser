@@ -263,6 +263,8 @@ class ParseTree(object):
                 # ad-hoc label mappings
                 if tag == 'S' or level == 0 and tag == 'Main Clause':
                     tag = 'Sentence'
+                elif level == 0 and tag == 'Stand Alone Phrase':
+                    tag = 'Phrase'
                 elif tag == 'Predicate' and not isLastChild:
                     tag = 'Verb Phrase'
                 # build tree node
@@ -481,7 +483,7 @@ class Parser(object):
             self.log('\n*** parse failed')
             result['error'] = "Sorry, failed to parse sentence"
         #
-        elif not self.lexer.peek(r'.*:SF'):
+        elif not self.lexer.peek(r'.*:SF.*'):
             # early termination
             result['error'] = "Sorry, incomplete parsing"
             self.log('\n*** incomplete parsing, last tried token = ', self.lastTriedToken().__repr__())

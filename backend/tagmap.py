@@ -321,6 +321,10 @@ tm(  # 제일 wrongly analyzed as 제:XPN;일:NR, make it 제일:MAG
     tagPat=r'제:XPN;일:NR', repl=r'제일:MAG', basePOS="MAG",
 )
 
+tm(  # 잘하다  wrongly seen as 잘:MAG;하:XSV;다:EF
+    tagPat=r'잘:MAG;하:XSV(?=;[^\;]+:(EF|ETM|ETN))', repl=r'잘하:VV', basePOS="VV",
+)
+
 # ------------ tag-sequence foldings & renamings ---------------
 
 tm(  # noun-derived verbs, N하다, N되다, N당하다, N시키다, etc. - combine XR|NN & VND suffix into a single NDV (noun-derived verb) verb
@@ -341,6 +345,10 @@ tm(  # numbers
 
 tm(  # V 지:EC negation connector  JNEC.*
     tagPat=r'(지):EC', repl=r'\1:JNEC', basePOS="EC", posLabel="Negation\nConnector",
+)
+
+tm ( # !요:JX .*:SF - a polite-making ending on a statement as a single phrase
+    tagPat=r'요:JX(?=;[^\:]+:SF)', repl=r'요:PRT', basePOS="JX", posLabel="Polite\nEnding",
 )
 
 # ----- dependent (aka bound) noun forms --------  map to DNF.* + DependentNounForm node rename
