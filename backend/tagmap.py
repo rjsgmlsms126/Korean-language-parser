@@ -293,6 +293,7 @@ tm(tagPat="다:EF",           posLabel="Plain-form\nEnding", )
 tm(tagPat="습니다:EF",        posLabel="Formal\nEnding", )
 tm(tagPat="ㄹ게:EF",         posLabel="Future Tense\nSuffix", )
 tm(tagPat="네요:EF",          posLabel="Surprised\nEnding", )
+tm(tagPat="(ㅂ시다|읍시다|자):EF", posLabel="Let's\nSuffix", )
 
 tm(tagPat="겠:EP",           posLabel="Intension\nMarker", refs={})
 tm(tagPat="(으면|면):EC",     posLabel="If\nSuffix", )
@@ -323,6 +324,10 @@ tm(  # 제일 wrongly analyzed as 제:XPN;일:NR, make it 제일:MAG
 
 tm(  # 잘하다  wrongly seen as 잘:MAG;하:XSV;다:EF
     tagPat=r'잘:MAG;하:XSV(?=;[^\;]+:(EF|ETM|ETN))', repl=r'잘하:VV', basePOS="VV",
+)
+
+tm(  # 다들  wrongly seen as 다:MAG;들:XSN, s/b a single pronoun
+    tagPat=r'다:MAG;들:XSN', repl=r'다들:NP', basePOS="NP",
 )
 
 # ------------ tag-sequence foldings & renamings ---------------

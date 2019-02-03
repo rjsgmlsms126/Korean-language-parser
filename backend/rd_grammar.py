@@ -286,7 +286,7 @@ class KoreanParser(Parser):
 
     @grammarRule
     def simpleNoun(self):
-        return self.lexer.next(r'.*:(NN.*|NR|SL|NP|SN)')
+        return self.lexer.next(r'.*:(NN.*|NR|SL|NP.*|SN)')
 
     @grammarRule
     def nominalizedVerb(self):

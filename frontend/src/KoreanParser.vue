@@ -555,6 +555,7 @@ document.onmouseup = function (e) {
 
     #input-row {
         justify-content: space-between;
+        width: 53em;
     }
 
     #input-title {
@@ -563,7 +564,8 @@ document.onmouseup = function (e) {
 
     #attribution {
         font-size: 70%;
-        color: gray;
+        color: black;
+        opacity: 0.6;
     }
 
     #input-sentence {
