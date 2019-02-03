@@ -325,6 +325,10 @@ tm(  # 잘하다  wrongly seen as 잘:MAG;하:XSV;다:EF
     tagPat=r'잘:MAG;하:XSV(?=;[^\;]+:(EF|ETM|ETN))', repl=r'잘하:VV', basePOS="VV",
 )
 
+tm(  # 다들  wrongly seen as 다:MAG;들:XSN, s/b a single pronoun
+    tagPat=r'다:MAG;들:XSN', repl=r'다들:NP', basePOS="NP",
+)
+
 # ------------ tag-sequence foldings & renamings ---------------
 
 tm(  # noun-derived verbs, N하다, N되다, N당하다, N시키다, etc. - combine XR|NN & VND suffix into a single NDV (noun-derived verb) verb
