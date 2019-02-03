@@ -293,6 +293,7 @@ tm(tagPat="다:EF",           posLabel="Plain-form\nEnding", )
 tm(tagPat="습니다:EF",        posLabel="Formal\nEnding", )
 tm(tagPat="ㄹ게:EF",         posLabel="Future Tense\nSuffix", )
 tm(tagPat="네요:EF",          posLabel="Surprised\nEnding", )
+tm(tagPat="(ㅂ시다|읍시다|자):EF", posLabel="Let's\nSuffix", )
 
 tm(tagPat="겠:EP",           posLabel="Intension\nMarker", refs={})
 tm(tagPat="(으면|면):EC",     posLabel="If\nSuffix", )
