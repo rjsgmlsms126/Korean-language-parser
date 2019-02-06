@@ -334,7 +334,7 @@
             {
               "type": "word",
               "word": "\uc740",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -537,7 +537,7 @@
             {
               "type": "word",
               "word": "\ub294",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -678,7 +678,7 @@
                 {
                   "type": "word",
                   "word": "\uc558",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -824,7 +824,7 @@
             {
               "type": "word",
               "word": "\ub294",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -965,7 +965,7 @@
                 {
                   "type": "word",
                   "word": "\uc558",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -1064,7 +1064,7 @@
             {
               "type": "word",
               "word": "\uc740",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -1400,7 +1400,7 @@
             {
               "type": "word",
               "word": "\ub294",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -1522,7 +1522,7 @@
                 {
                   "type": "word",
                   "word": "\ud558\ub098",
-                  "tag": "NUM_3",
+                  "tag": "NUM_5",
                   "tagLabel": [
                     "Number"
                   ],
@@ -1844,7 +1844,7 @@
                 {
                   "type": "word",
                   "word": "\ub2e4\uc12f",
-                  "tag": "NUM_3",
+                  "tag": "NUM_5",
                   "tagLabel": [
                     "Number"
                   ],
@@ -2518,8 +2518,9 @@
             {
               "type": "word",
               "word": "\uc5d0\uac8c",
-              "tag": "ADVEC_14",
+              "tag": "ADVSF_17",
               "tagLabel": [
+                "To/For",
                 "Particle"
               ],
               "children": [],
@@ -2612,7 +2613,7 @@
                 {
                   "type": "word",
                   "word": "\uc5c8",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -2704,7 +2705,7 @@
             {
               "type": "word",
               "word": "\ub294",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -2741,10 +2742,10 @@
             {
               "type": "word",
               "word": "\uc5d0",
-              "tag": "ADVEC_13",
+              "tag": "ADVSF_16",
               "tagLabel": [
                 "Time/Place",
-                "Marker"
+                "Particle"
               ],
               "children": [],
               "parent": 6,
@@ -2798,7 +2799,7 @@
                 {
                   "type": "word",
                   "word": "\uc558",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -2924,7 +2925,7 @@
             {
               "type": "word",
               "word": "\uc5b4\uc11c",
-              "tag": "ADVEC_15",
+              "tag": "ADVEC_21",
               "tagLabel": [
                 "Reason-giving",
                 "Suffix"
@@ -2968,10 +2969,10 @@
                 {
                   "type": "word",
                   "word": "\uc5d0",
-                  "tag": "ADVEC_13",
+                  "tag": "ADVSF_16",
                   "tagLabel": [
                     "Time/Place",
-                    "Marker"
+                    "Particle"
                   ],
                   "children": [],
                   "parent": 10,
@@ -3131,7 +3132,7 @@
             {
               "type": "word",
               "word": "\uc5b4\uc11c",
-              "tag": "ADVEC_15",
+              "tag": "ADVEC_21",
               "tagLabel": [
                 "Reason-giving",
                 "Suffix"
@@ -3175,7 +3176,7 @@
                 {
                   "type": "word",
                   "word": "\ub294",
-                  "tag": "TOP_5",
+                  "tag": "TOP_8",
                   "tagLabel": [
                     "Topic",
                     "Marker"
@@ -3352,7 +3353,7 @@
             {
               "type": "word",
               "word": "\uc5b4\uc11c",
-              "tag": "ADVEC_15",
+              "tag": "ADVEC_21",
               "tagLabel": [
                 "Reason-giving",
                 "Suffix"
@@ -3425,7 +3426,8 @@
                           "word": "\uac8c",
                           "tag": "EC",
                           "tagLabel": [
-                            "Suffix"
+                            "Adverbial",
+                            "Connector"
                           ],
                           "children": [],
                           "parent": 11,
@@ -3455,7 +3457,7 @@
                 {
                   "type": "word",
                   "word": "\uc5c8",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -3552,7 +3554,7 @@
             {
               "type": "word",
               "word": "\uc740",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -3583,7 +3585,7 @@
                 {
                   "type": "word",
                   "word": "\uacf5\ubd80\ud558",
-                  "tag": "VND_1",
+                  "tag": "VND_3",
                   "tagLabel": [
                     "Verb"
                   ],
@@ -3596,7 +3598,7 @@
                 {
                   "type": "word",
                   "word": "\uae30",
-                  "tag": "PNOM_9",
+                  "tag": "PNOM_12",
                   "tagLabel": [
                     "Nominalizing",
                     "Particle"
@@ -3771,7 +3773,7 @@
                     {
                       "type": "word",
                       "word": "\uc544 \ubc84\ub9ac",
-                      "tag": "AUX_28",
+                      "tag": "AUX_32",
                       "tagLabel": [
                         "To Complete"
                       ],
@@ -3787,7 +3789,7 @@
                 {
                   "type": "word",
                   "word": "\uc5c8",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -3876,7 +3878,7 @@
             {
               "type": "word",
               "word": "\uc740",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -3913,10 +3915,10 @@
             {
               "type": "word",
               "word": "\uc5d0\uc11c",
-              "tag": "ADVEC_13",
+              "tag": "ADVSF_16",
               "tagLabel": [
                 "Time/Place",
-                "Marker"
+                "Particle"
               ],
               "children": [],
               "parent": 7,
@@ -4101,7 +4103,7 @@
                 {
                   "type": "word",
                   "word": "\ub294 \uac83",
-                  "tag": "PNOM_10",
+                  "tag": "PNOM_13",
                   "tagLabel": [
                     "Verb-modifying",
                     "suffix"
@@ -4162,7 +4164,7 @@
                 {
                   "type": "word",
                   "word": "\uc558",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -4337,7 +4339,8 @@
               "word": "\uc544",
               "tag": "EC",
               "tagLabel": [
-                "Suffix"
+                "Auxiliary",
+                "Connector"
               ],
               "children": [],
               "parent": 10,
@@ -4472,7 +4475,7 @@
             {
               "type": "word",
               "word": "\ub294",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -4550,10 +4553,10 @@
                             {
                               "type": "word",
                               "word": "\uc11c",
-                              "tag": "ADVEC_13",
+                              "tag": "ADVSF_16",
                               "tagLabel": [
                                 "Time/Place",
-                                "Marker"
+                                "Particle"
                               ],
                               "children": [],
                               "parent": 7,
@@ -4660,7 +4663,7 @@
                 {
                   "type": "word",
                   "word": "\uc5c8",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -4807,7 +4810,7 @@
                 {
                   "type": "word",
                   "word": "\u3139 \uac83",
-                  "tag": "PNOM_10",
+                  "tag": "PNOM_13",
                   "tagLabel": [
                     "Verb-modifying",
                     "suffix"
@@ -4838,7 +4841,7 @@
             {
               "type": "word",
               "word": "\ub77c\uace0",
-              "tag": "CEC_18",
+              "tag": "CEC_22",
               "tagLabel": [
                 "Clause",
                 "Connector"
@@ -4862,7 +4865,7 @@
             {
               "type": "word",
               "word": "\uac71\uc815\ub418",
-              "tag": "VND_1",
+              "tag": "VND_3",
               "tagLabel": [
                 "Verb"
               ],
@@ -4984,7 +4987,7 @@
             {
               "type": "word",
               "word": "\ub77c\uace0",
-              "tag": "CEC_18",
+              "tag": "CEC_22",
               "tagLabel": [
                 "Clause",
                 "Connector"
@@ -5075,7 +5078,7 @@
                 {
                   "type": "word",
                   "word": "\ud574\uba85\ud558",
-                  "tag": "VND_1",
+                  "tag": "VND_3",
                   "tagLabel": [
                     "Verb"
                   ],
@@ -5104,7 +5107,7 @@
             {
               "type": "word",
               "word": "\uc9c0\ub9cc",
-              "tag": "CEC_19",
+              "tag": "CEC_23",
               "tagLabel": [
                 "Clause",
                 "Connector"
@@ -5148,7 +5151,7 @@
                 {
                   "type": "word",
                   "word": "\uc9c0",
-                  "tag": "JNEC_4",
+                  "tag": "JNEC_6",
                   "tagLabel": [
                     "Negation",
                     "Connector"
@@ -5175,7 +5178,7 @@
                 {
                   "type": "word",
                   "word": "\uc558",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -5277,7 +5280,7 @@
             {
               "type": "word",
               "word": "\ub294",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -5358,7 +5361,7 @@
                 {
                   "type": "word",
                   "word": "\u3134 \uac83",
-                  "tag": "PNOM_10",
+                  "tag": "PNOM_13",
                   "tagLabel": [
                     "Verb-modifying",
                     "suffix"
@@ -5419,7 +5422,7 @@
                 {
                   "type": "word",
                   "word": "\uc558",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -5563,7 +5566,7 @@
                     {
                       "type": "word",
                       "word": "\uace0 \uc2f6",
-                      "tag": "AUX_29",
+                      "tag": "AUX_33",
                       "tagLabel": [
                         "Want to"
                       ],
@@ -5579,7 +5582,7 @@
                 {
                   "type": "word",
                   "word": "\uc9c0",
-                  "tag": "JNEC_4",
+                  "tag": "JNEC_6",
                   "tagLabel": [
                     "Negation",
                     "Connector"
@@ -5689,7 +5692,7 @@
                 {
                   "type": "word",
                   "word": "\ub294",
-                  "tag": "TOP_5",
+                  "tag": "TOP_8",
                   "tagLabel": [
                     "Topic",
                     "Marker"
@@ -5824,7 +5827,7 @@
           "children": [
             {
               "type": "tree",
-              "tag": "Simple Noun Phrase",
+              "tag": "Adverbial Phrase",
               "level": 2,
               "layer": 1,
               "parent": 22,
@@ -5889,7 +5892,7 @@
                     {
                       "type": "word",
                       "word": "\u3139 \uac70 \uc774",
-                      "tag": "PSX_33",
+                      "tag": "PSX_38",
                       "tagLabel": [
                         "Future tense",
                         "Auxiliary"
@@ -5993,7 +5996,7 @@
             {
               "type": "word",
               "word": "\ub294",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -6009,7 +6012,7 @@
         },
         {
           "type": "tree",
-          "tag": "Simple Noun Phrase",
+          "tag": "Adverbial Phrase",
           "level": 1,
           "layer": 1,
           "parent": 21,
@@ -6185,7 +6188,7 @@
                 {
                   "type": "word",
                   "word": "\uc5c8",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -6282,7 +6285,7 @@
             {
               "type": "word",
               "word": "\ub294",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -6298,7 +6301,7 @@
         },
         {
           "type": "tree",
-          "tag": "Simple Noun Phrase",
+          "tag": "Adverbial Phrase",
           "level": 1,
           "layer": 1,
           "parent": 25,
@@ -6521,7 +6524,7 @@
                 {
                   "type": "word",
                   "word": "\uace0 \uc2f6",
-                  "tag": "AUX_29",
+                  "tag": "AUX_33",
                   "tagLabel": [
                     "Want to"
                   ],
@@ -6679,7 +6682,7 @@
                 {
                   "type": "word",
                   "word": "\ubc0f",
-                  "tag": "CON_11",
+                  "tag": "CON_14",
                   "tagLabel": [
                     "Adverb"
                   ],
@@ -6715,7 +6718,7 @@
                 {
                   "type": "word",
                   "word": "\uc5d0 \uad00\ud558\uc5ec\uc11c",
-                  "tag": "PRP_24",
+                  "tag": "PRP_28",
                   "tagLabel": [
                     "Suffix"
                   ],
@@ -6731,7 +6734,7 @@
             {
               "type": "word",
               "word": "\ub294",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -6775,7 +6778,7 @@
                 {
                   "type": "word",
                   "word": "\ubc0f",
-                  "tag": "CON_11",
+                  "tag": "CON_14",
                   "tagLabel": [
                     "Adverb"
                   ],
@@ -6858,7 +6861,7 @@
                 {
                   "type": "word",
                   "word": "\ucc38\uace0\ud558",
-                  "tag": "VND_1",
+                  "tag": "VND_3",
                   "tagLabel": [
                     "Verb"
                   ],
@@ -6888,7 +6891,7 @@
             {
               "type": "word",
               "word": "\uae30",
-              "tag": "PNOM_9",
+              "tag": "PNOM_12",
               "tagLabel": [
                 "Nominalizing",
                 "Particle"
@@ -7053,7 +7056,7 @@
             {
               "type": "word",
               "word": "\u3134\ub370",
-              "tag": "CEC_20",
+              "tag": "CEC_24",
               "tagLabel": [
                 "Clause",
                 "Connector"
@@ -7130,7 +7133,7 @@
                     {
                       "type": "word",
                       "word": "\u3139 \uac70 \uc774",
-                      "tag": "PSX_33",
+                      "tag": "PSX_38",
                       "tagLabel": [
                         "Future tense",
                         "Auxiliary"
@@ -7422,7 +7425,7 @@
                 {
                   "type": "word",
                   "word": "\uc5c8",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -7576,7 +7579,7 @@
                 {
                   "type": "word",
                   "word": "\uae30",
-                  "tag": "PNOM_9",
+                  "tag": "PNOM_12",
                   "tagLabel": [
                     "Nominalizing",
                     "Particle"
@@ -7770,7 +7773,7 @@
                 {
                   "type": "word",
                   "word": "\uc5c8",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -7947,7 +7950,7 @@
                 {
                   "type": "word",
                   "word": "\uae30",
-                  "tag": "PNOM_9",
+                  "tag": "PNOM_12",
                   "tagLabel": [
                     "Nominalizing",
                     "Particle"
@@ -8145,7 +8148,7 @@
                 {
                   "type": "word",
                   "word": "\uae30",
-                  "tag": "PNOM_9",
+                  "tag": "PNOM_12",
                   "tagLabel": [
                     "Nominalizing",
                     "Particle"
@@ -8162,7 +8165,7 @@
             {
               "type": "word",
               "word": "\ub54c\ubb38\uc5d0",
-              "tag": "PRP_23",
+              "tag": "PRP_27",
               "tagLabel": [
                 "Adverb"
               ],
@@ -8265,7 +8268,7 @@
                 {
                   "type": "word",
                   "word": "\uc5c8",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -8429,7 +8432,7 @@
                 {
                   "type": "word",
                   "word": "\uae30",
-                  "tag": "PNOM_9",
+                  "tag": "PNOM_12",
                   "tagLabel": [
                     "Nominalizing",
                     "Particle"
@@ -8446,7 +8449,7 @@
             {
               "type": "word",
               "word": "\ub54c\ubb38\uc5d0",
-              "tag": "PRP_23",
+              "tag": "PRP_27",
               "tagLabel": [
                 "Adverb"
               ],
@@ -8562,7 +8565,7 @@
                 {
                   "type": "word",
                   "word": "\uc744 \uac70 \uc774",
-                  "tag": "PSX_33",
+                  "tag": "PSX_38",
                   "tagLabel": [
                     "Future tense",
                     "Auxiliary"
@@ -8683,7 +8686,7 @@
             {
               "type": "word",
               "word": "\uc740",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -8727,7 +8730,7 @@
                 {
                   "type": "word",
                   "word": "\uae30",
-                  "tag": "PNOM_9",
+                  "tag": "PNOM_12",
                   "tagLabel": [
                     "Nominalizing",
                     "Particle"
@@ -8744,7 +8747,7 @@
             {
               "type": "word",
               "word": "\ub54c\ubb38\uc5d0",
-              "tag": "PRP_23",
+              "tag": "PRP_27",
               "tagLabel": [
                 "Adverb"
               ],
@@ -8847,7 +8850,7 @@
                 {
                   "type": "word",
                   "word": "\uc5c8",
-                  "tag": "PSX_32",
+                  "tag": "PSX_37",
                   "tagLabel": [
                     "Past tense",
                     "Marker"
@@ -8944,7 +8947,7 @@
             {
               "type": "word",
               "word": "\ub294",
-              "tag": "TOP_5",
+              "tag": "TOP_8",
               "tagLabel": [
                 "Topic",
                 "Marker"
@@ -9066,7 +9069,7 @@
                 {
                   "type": "word",
                   "word": "\ub294",
-                  "tag": "TOP_5",
+                  "tag": "TOP_8",
                   "tagLabel": [
                     "Topic",
                     "Marker"
@@ -9179,10 +9182,10 @@
                 {
                   "type": "word",
                   "word": "\uc5d0",
-                  "tag": "ADVEC_13",
+                  "tag": "ADVSF_16",
                   "tagLabel": [
                     "Time/Place",
-                    "Marker"
+                    "Particle"
                   ],
                   "children": [],
                   "parent": 12,
@@ -9318,7 +9321,7 @@
             {
               "type": "word",
               "word": "\ub294 \uac83",
-              "tag": "PNOM_10",
+              "tag": "PNOM_13",
               "tagLabel": [
                 "Verb-modifying",
                 "suffix"
@@ -9356,7 +9359,7 @@
                     {
                       "type": "word",
                       "word": "\ucd94\ucc9c\ud558",
-                      "tag": "VND_1",
+                      "tag": "VND_3",
                       "tagLabel": [
                         "Verb"
                       ],
@@ -9503,7 +9506,7 @@
             {
               "type": "word",
               "word": "\uc9c0",
-              "tag": "JNEC_4",
+              "tag": "JNEC_6",
               "tagLabel": [
                 "Negation",
                 "Connector"

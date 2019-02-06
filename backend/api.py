@@ -40,7 +40,7 @@ parserApp.config.update(
 def run_dev_server():
     "launch Flask dev server"
     parserApp.run(host = '0.0.0.0',
-               port = 9000, #80, # 9000,
+               port = 80, #80, # 9000,
                debug = True)
 
 logFile = None
@@ -116,7 +116,7 @@ def tranlsate():
 
 # ---------  API utility functions ---------------
 
-def parseInput(input, parser="RD", showAllLevels=False, getWordDefinitions=True):
+def parseInput(input, parser="RD", showAllLevels=False, verbose=1, getWordDefinitions=True):
     "parse input string into list of parsed contained sentence structures"
     # parser can be RD for recusrsive descent (currently the most-developed) or "NLTK" for the original NLTK chunking-grammar parser
 
@@ -162,7 +162,7 @@ def parseInput(input, parser="RD", showAllLevels=False, getWordDefinitions=True)
         else:  # recursive-descent parser
             from rd_grammar import KoreanParser
             parser = KoreanParser([":".join(p) for p in mappedPosList])
-            result = parser.parse(verbose=1)
+            result = parser.parse(verbose=verbose)
             parseTree = result.get('parseTree')
             if parseTree:
                 # apply any synthetic-tag-related node renamings
@@ -455,6 +455,8 @@ multiple-clause examples (아/어서, ~면, ...)
 병아리나 물고기도 키워 본 적 없어요?  - gets 키워 본 intermixed wrongly
 
 Fails:
+요즘에는 장르가 다양해졌어요  -  doesn't like the topic marker after the opening adverbial phrase, also the 지 aux verb should be marked as a 'with-the-characteristics-of suffix'
+저는 주로 주인공을 보고 선택해요.  - the auxiliary connector should be part of the main (first) verb(??)   Actually, this is probably OK
 중국 음식을 좋아하기 - not a complete sentence, but declared ok by grammar checker,  note the 을 makes it more than one phrase, but accepting more overrides sentence
 나는 일하러 달려갈 것이다. 그렇지 않으면 나는 거기에 차를 몰고 갈 것이다.   - the "그렇지 않으면" is just "Or,"
 추우면 못 뛰니까 안 뛰겠다.  - two conditionals in one sentene

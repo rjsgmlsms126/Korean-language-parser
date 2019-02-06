@@ -293,10 +293,13 @@ tm(tagPat="다:EF",           posLabel="Plain-form\nEnding", )
 tm(tagPat="습니다:EF",        posLabel="Formal\nEnding", )
 tm(tagPat="ㄹ게:EF",         posLabel="Future Tense\nSuffix", )
 tm(tagPat="네요:EF",          posLabel="Surprised\nEnding", )
+tm(tagPat="게:EF",          posLabel="Adverbial\nEnding", )
 tm(tagPat="(ㅂ시다|읍시다|자):EF", posLabel="Let's\nSuffix", )
 
 tm(tagPat="겠:EP",           posLabel="Intension\nMarker", refs={})
-tm(tagPat="(으면|면):EC",     posLabel="If\nSuffix", )
+tm(tagPat="(으면|면):EC",     posLabel="If\nConnector", )
+tm(tagPat="(아|어):EC",      posLabel="Auxiliary\nConnector", )
+tm(tagPat="게:EC",           posLabel="Adverbial\nConnector", )
 
 tm(tagPat="(ㄴ|은|는|ㄹ):ETM", posLabel="Adjectival\nSuffix", )
 tm(tagPat="(와|과):JC",       posLabel="And/With\nParticle", )
@@ -422,41 +425,50 @@ tm( # 또는 "alternatives" connecting adverb(??)
     nodeRename="Connection:Alternatives",
 )
 
-# ----- adverbial predicate-phrase connectors --------  mapping to ADVEC.* & renaming AdverbialPhrase
+# ----- adverb suffixes ------------ mapping to ADVSF.*
 
 tm( # 에/에서/서 Location/Time marker
-    tagPat=r'(서|에|에서):JKB', repl=r'\1:ADVEC',
-    basePOS="JKB", posLabel="Time/Place\nMarker",
+    tagPat=r'(서|에|에서):JKB', repl=r'\1:ADVSF',
+    basePOS="JKB", posLabel="Time/Place\nParticle",
     # nodeRename="NounPhrase:Location/Time",
     refs={"ttmik": "/lessons/l1l18", "htsk": "/unit-1-lessons-9-16/lesson-12/#kp3", },
 )
 
-tm( # 에게:JKB "to/at/for" particle
-    tagPat=r'(에게|한테|께):JKB', repl=r'\1:ADVEC',
-    basePOS="JKB",
+tm( # 에게++:JKB "to" particle
+    tagPat=r'(에게|한테|께):JKB', repl=r'\1:ADVSF',
+    basePOS="JKB", posLabel="To/For\nParticle",
     #nodeRename="Noun Phrase:To/for/at",
     refs={"ttmik": "/lessons/level-2-lesson-7", "htsk": "/unit1/unit-1-lessons-9-16/lesson-13/#kp3", },
 )
 
-tm( # 어서 "reason" adverbial verb-phrase suffix
-    tagPat=r'어서:EC', repl=r'어서:ADVEC',
-    basePOS="EC", posLabel="Reason-giving\nSuffix", descr="Reason-giving connecting suffix",
-    #nodeRename="Adverbial Phrase:Reason",
-    refs={},
+tm( # 에게서++:JKB "랙" particle
+    tagPat=r'(에게서|한테서):JKB', repl=r'\1:ADVSF',
+    basePOS="JKB", posLabel="For\nParticle",
+    #nodeRename="Noun Phrase:To/for/at",
+    refs={"ttmik": "/lessons/level-2-lesson-7", "htsk": "/unit1/unit-1-lessons-9-16/lesson-13/#kp3", },
 )
 
 tm( # ~ㄹ/을 때 "when/during the time" adverbial verb-phrase suffix
-    tagPat=r'(ㄹ|을):ETM;때:NNG', repl=r'\1 때:ADVEC',
-    basePOS="EC", posLabel="When\nSuffix", descr="At-a-time-when connecting suffix",
+    tagPat=r'(ㄹ|을):ETM;때:NNG', repl=r'\1 때:ADVSF',
+    basePOS="JKB", posLabel="When\nParticle", descr="At-a-time-when suffix",
     #nodeRename="Adverbial Phrase:When",
     refs={"htsk": "/unit-2-lower-intermediate-korean-grammar/unit-2-lessons-42-50/lesson-42/#422",
           "kacg": "Section 7.2.1, pp 346"},
 )
 
 tm( # ~ㄹ/을 때부터 "since the time when ~" adverbial verb-phrase suffix
-    tagPat=r'(ㄹ|을):ETM;때:NNG;부터:JX', repl=r'\1 때부터:ADVEC',
-    basePOS="EC", posLabel="Since Time When\nSuffix", descr="Since-the-time-when connecting suffix",
+    tagPat=r'(ㄹ|을):ETM;때:NNG;부터:JX', repl=r'\1 때부터:ADVSF',
+    basePOS="JKB", posLabel="Since Time When\nParticle", descr="Since-the-time-when suffix",
     #nodeRename="Adverbial Phrase:Since When Phrase",
+    refs={},
+)
+
+# ----- adverbial predicate-phrase connectors --------  mapping to ADVEC.* & renaming AdverbialPhrase
+
+tm( # 어서 "reason" adverbial verb-phrase suffix
+    tagPat=r'어서:EC', repl=r'어서:ADVEC',
+    basePOS="EC", posLabel="Reason-giving\nSuffix", descr="Reason-giving connecting suffix",
+    #nodeRename="Adverbial Phrase:Reason",
     refs={},
 )
 

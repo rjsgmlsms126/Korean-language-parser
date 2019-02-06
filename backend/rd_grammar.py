@@ -145,9 +145,8 @@ class KoreanParser(Parser):
                               option(self.adjectivalPhrase)), zeroOrMore(self.punctuation),
                        zeroOrMore(self.noun), zeroOrMore(self.punctuation),
                        zeroOrMore(self.nounModifyingSuffix),
-                       zeroOrMore(self.adverbialParticle),
                        zeroOrMore(self.auxiliaryParticle),
-                       optional(self.adverbialPhrase), zeroOrMore(self.punctuation),)
+                       zeroOrMore(self.punctuation),)
         return snp
 
     @grammarRule
@@ -203,6 +202,16 @@ class KoreanParser(Parser):
         return vp
 
     @grammarRule
+    def negativeVerbPhrase(self):
+        nvp = sequence(zeroOrMore(self.adverbial),
+                       anyOneOf(option(self.verb), option(self.verbAndAuxiliary)),
+                       self.lexer.next(r'.*:(JNEC.*)'), # 지
+                       optional(self.lexer.next(r'.*:(JKS|JKO|TOP.*)')),  # ~지 modifiers
+                       self.verb(),
+                       zeroOrMore(self.verbSuffix))
+        return nvp
+
+    @grammarRule
     def adverbial(self):
         "parse an adverbial"
         av = anyOneOf(option(self.adverb), option(self.adverbialPhrase))
@@ -219,16 +228,6 @@ class KoreanParser(Parser):
     def simpleAdverb(self):
         sa = self.lexer.next(r'.*:(MAG.*)')
         return sa
-
-    @grammarRule
-    def negativeVerbPhrase(self):
-        nvp = sequence(zeroOrMore(self.adverbial),
-                       anyOneOf(option(self.verb), option(self.verbAndAuxiliary)),
-                       self.lexer.next(r'.*:(JNEC.*)'), # 지
-                       optional(self.lexer.next(r'.*:(JKS|JKO|TOP.*)')),  # ~지 modifiers
-                       self.verb(),
-                       zeroOrMore(self.verbSuffix))
-        return nvp
 
     @grammarRule
     def possessive(self):
@@ -316,7 +315,7 @@ class KoreanParser(Parser):
 
     @grammarRule
     def adverbialParticle(self):
-        return self.lexer.next(r'.*:(JKB)')
+        return self.lexer.next(r'.*:(JKB|ADVSF.*)')
 
     @grammarRule
     def auxiliaryParticle(self):
@@ -326,13 +325,13 @@ class KoreanParser(Parser):
     def adverbialPhrase(self):
         "parse an adverbial phrase - I think this should be called a prepostional phrase!"
         ap = sequence(anyOneOf(option(self.nounPhrase), option(self.adjectivalPhrase)),
-                      self.adverbialPhraseConnector(),
+                      self.adverbialParticle(),
                       optional(self.auxiliaryParticle))
         return ap
 
-    @grammarRule
+    @grammarRule  # deprecated
     def adverbialPhraseConnector(self):
-        return self.lexer.next(r'.*:(EC|ADVEC.*)')
+        return self.lexer.next(r'.*:(EC)')
 
     @grammarRule
     def objectPhrase(self):
@@ -359,5 +358,5 @@ class KoreanParser(Parser):
     def topicPhrase(self):
         "parse a noun-phrase with topic-marker"
         return sequence(zeroOrMore(self.conjunction),
-                        self.nounPhrase(),
+                        anyOneOf(option(self.nounPhrase), option(self.adverbialPhrase)),
                         self.lexer.next(r'.*:TOP.*'))

@@ -83,7 +83,7 @@ def test():
     fails = []; missing = []
     for s in testSentences:
         # parse sentence, extract parseTree & compare to ref dict
-        parse = parseInput(s, getWordDefinitions=False)[0]
+        parse = parseInput(s, getWordDefinitions=False, verbose=0)[0]
         ref = refDict.get(s)
         if not ref:
             missing.append(s)
