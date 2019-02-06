@@ -326,11 +326,15 @@ tm(  # 제일 wrongly analyzed as 제:XPN;일:NR, make it 제일:MAG
 )
 
 tm(  # 잘하다  wrongly seen as 잘:MAG;하:XSV;다:EF
-    tagPat=r'잘:MAG;하:XSV(?=;[^\;]+:(EF|ETM|ETN))', repl=r'잘하:VV', basePOS="VV",
+    tagPat=r'잘:MAG;하:XSV(?=;[^\:]+:(EC|EF|ETM|ETN))', repl=r'잘하:VV', basePOS="VV",
 )
 
 tm(  # 다들  wrongly seen as 다:MAG;들:XSN, s/b a single pronoun
     tagPat=r'다:MAG;들:XSN', repl=r'다들:NP', basePOS="NP",
+)
+
+tm(  # .*:NNG;이:VCP;!verb-suffixes - 이 here s/b a subject marker.  is it only this noun??!!
+    tagPat=r':NNG;이:VCP(?=;[^\:]+:(?!(EF|EC|EP|ETM|ETN)))', repl=r':NNG;이:JKS', basePOS="JKS",
 )
 
 # ------------ tag-sequence foldings & renamings ---------------
