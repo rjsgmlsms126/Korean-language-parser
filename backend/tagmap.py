@@ -93,6 +93,7 @@ class TagMap(object):
         self.tagPat = tagPat
         if repl:
             # uniquify synthetic tag & record it if this mapping includes a chunktree node renaming
+            #  !!! note this code assumes the last tag in the replacement pattern is the new tag, we may want to make that an explicit meta-pattern
             self.repl = repl + ("_%d" % TagMap.tagOrdinal); TagMap.tagOrdinal += 1
             self.newTag = self.repl.split(':')[-1] # extract this pattern's synthetic tag
             self.nodeRename = nodeRename; self.annotation = annotation
@@ -307,14 +308,18 @@ tm(tagPat="부터:JX",          posLabel="Since\nParticle", )
 
 # -------------- synthetic tag patterns ----------------
 
-#    patterns of these word:POC strings are preprocessed to define new
-#    synthetic word:POC tags used in the chunking grammar below
+#  patterns of these word:POC strings are preprocessed to define new
+#  synthetic or corrected word:POC tags used in the chunking grammar below
 #  at present, these are applied in the order longest-to-shortest pattern, we should probably make this a listfor explicit ordering
 
 # note that in the in the processing of the defs below, all new tags will have a "_nnn" appended to make them unique and
 # assist in unambiguous mapping to the associated metadata in chuck-tree post-processing.  So, any references to these
 # new tags in the chunking grammar MUST be included with a trailing ".*" in the chunking grammar so that it
 #  matches all generated integer-suffixed variations of the base synthetic tag
+#
+#  The re-mapping code also assumes that the tag-patterns begin and end on whole phoneme:tag boundaries, mapping will fail if they are not
+#  and further that the last tag in any replacement pattern is the new tag which will always get uniquified with a trailing _nnnn
+#
 
 # ----------------- Khaii errors  ---------------
 
