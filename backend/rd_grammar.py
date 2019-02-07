@@ -206,7 +206,7 @@ class KoreanParser(Parser):
         nvp = sequence(zeroOrMore(self.adverbial),
                        anyOneOf(option(self.verb), option(self.verbAndAuxiliary)),
                        self.lexer.next(r'.*:(JNEC.*)'), # 지
-                       optional(self.lexer.next(r'.*:(JKS|JKO|TOP.*)')),  # ~지 modifiers
+                       optional(self.lexer.next(r'.*:(JKS.*|JKO|TOP.*)')),  # ~지 modifiers
                        self.verb(),
                        zeroOrMore(self.verbSuffix))
         return nvp
@@ -345,7 +345,7 @@ class KoreanParser(Parser):
         "parse a noun-phrase with subject-marker"
         return sequence(zeroOrMore(self.conjunction),
                         self.nounPhrase(),
-                        self.lexer.next(r'.*:JKS'))
+                        self.lexer.next(r'.*:JKS.*'))
 
     @grammarRule
     def complementPhrase(self):

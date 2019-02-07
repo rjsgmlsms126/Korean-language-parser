@@ -334,7 +334,7 @@ tm(  # 다들  wrongly seen as 다:MAG;들:XSN, s/b a single pronoun
 )
 
 tm(  # .*:NNG;이:VCP;!verb-suffixes - 이 here s/b a subject marker.  is it only this noun??!!
-    tagPat=r':NNG;이:VCP(?=;[^\:]+:(?!(EF|EC|EP|ETM|ETN)))', repl=r':NNG;이:JKS', basePOS="JKS",
+    tagPat=r'([^:]+):NNG;이:VCP(?=;[^\:]+:(?!(EF|EC|EP|ETM|ETN)))', repl=r'\1:NNG;이:JKS', basePOS="JKS", posLabel="Subject\nMarker",
 )
 
 # ------------ tag-sequence foldings & renamings ---------------
