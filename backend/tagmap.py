@@ -26,6 +26,7 @@ class TagMap(object):
 
     references = {"ttmik": {"title": "Talk to me in Korean", "hostname": "talktomeinkorean.com"},
                   "htsk":  {"title": "How to study Korean",  "hostname": "www.howtostudykorean.com"},
+                  "kwp":   {"title": "Korean Wiki Project",  "hostname": "www.koreanwikiproject.com"},
                   "kacg":  {"title": "Korean: A Comprehensive Grammar"},
                   "itlk":  {"title": "italki.com answers", "hostname": "www.italki.com"}}
 
@@ -582,9 +583,13 @@ tm( # ~고 있다 progressive auxiliary form
     notes="",
 )
 
-
-# A/V + 아/어 버리다
-#
+tm( # V + 아/어 + 야겠다 auxiliary form: had better" or "(I) guess (I) should" or "(I) guess I have to."
+    tagPat=r'(아|어|여)야:EC;겠:EP', repl=r'\1야겠:AUX',
+    basePOS="VX", posLabel="Had better\nAuxiliary", descr="Had better, guess (I) should, ...",
+    wikiKey="아야",
+    refs={"ttmik": "/lessons/level-2-lesson-20", "kwp": "/wiki/아/어_%2B_야겠다", "htsk": "/unit-2-lower-intermediate-korean-grammar/unit-2-lessons-42-50/lesson-46/"},
+    notes="",
+)
 
 # ------ nominal verb forms V 기 ... ---------  usually mapping to FNV.*
 
