@@ -148,7 +148,7 @@ class TagMap(object):
             fr = dict(title=cls.references[key]['title'])
             hostname = cls.references[key].get('hostname')
             if hostname:
-                fr['slug'] = "https://" + cls.references[key]['hostname'] + page
+                fr['slug'] = "http://" + cls.references[key]['hostname'] + page
             else:
                 fr['page'] = page
             fullRefs.append(fr)
