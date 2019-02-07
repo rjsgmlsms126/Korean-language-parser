@@ -180,7 +180,13 @@ class TagMap(object):
                 if mic == len(morphemes):
                     break
                 newMorphemes += tchars[tic]
+                # the following handles character insertions (of spaces ONLY) & deletions  todo: need to handle insertions of non-spaces, should that arise in future mappings
                 if morphemes[mic] == tchars[tic]:
+                    mic += 1
+                elif tchars[tic] != ' ':
+                    # deletions handled here by looking forward for char that matches next in mapped pos string, seems a reasonable heuristic
+                    while mic < len(morphemes) and morphemes[mic] != tchars[tic]:
+                        mic += 1
                     mic += 1
                 tic += 1
             newGroups.append([word, newMorphemes])
@@ -584,7 +590,7 @@ tm( # ~고 있다 progressive auxiliary form
 )
 
 tm( # V + 아/어 + 야겠다 auxiliary form: had better" or "(I) guess (I) should" or "(I) guess I have to."
-    tagPat=r'(아|어|여)야:EC;겠:EP', repl=r'\1야겠:AUX',
+    tagPat=r'(아|어|여)야:EC;(하:VX;)*겠:EP', repl=r'\1야겠:AUX',
     basePOS="VX", posLabel="Had better\nAuxiliary", descr="Had better, guess (I) should, ...",
     wikiKey="아야",
     refs={"ttmik": "/lessons/level-2-lesson-20", "kwp": "/wiki/아/어_%2B_야겠다", "htsk": "/unit-2-lower-intermediate-korean-grammar/unit-2-lessons-42-50/lesson-46/"},
