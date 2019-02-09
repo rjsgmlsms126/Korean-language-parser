@@ -466,9 +466,16 @@ Fails:
   교수님은 나에게 “무엇을 일하든지 열심히 일하는 것은 제일 중요하잖아”라고 가르쳐 주셨어요.
 나는 뭐, 심각한 일이라고.  - comma should be in first phrase
 저는 한국어를 진지하게 공부하고 있어요. -  게 not properly attached to 진지하
+
+fixed, but notewworthy:
+저는 주로 주인공을 보고 선택해요.  - the auxiliary connector should be part of the main (first) verb(??)   Actually, this is probably OK
+
   
 To try:
 가방을 산다고 말했어요?
 지원이가 한국에서 여행하러 가겠다고 그랬어요
+
+Khaiii erors:
+여기는 청소년들이 오는 데가 아니에요. - Khaiii calls the first 는 a verb-to-ajective particle!!
 
 """

@@ -39,7 +39,7 @@ class TagMap(object):
         "NP":       ("Pronoun",     "Substantive",      "Pronoun",                          "체언	: 대명사"),
         "NR":       ("Noun",        "Substantive",      "Number",                           "체언	: 수사"),
         "VV":       ("Verb",        "Inflectional",     "Verb",                             "용언	: 동사"),
-        "VA":       ("Adjective",   "Inflectional", "Descriptive verb / Adjective",   "용언	: 형용사"),
+        "VA":       ("Adjective",   "Inflectional",     "Descriptive verb / Adjective",    "용언	: 형용사"),
         "VX":       ("Verb",        "Inflectional",     "Auxiliary or supplimental verb",   "용언: 보조 용언"),
         "VCP":      ("Adjective",   "Inflectional",     "The positive copula - 이다",        "용언: 긍정 지정사"),
         "VCN":      ("Adjective",   "Inflectional",     "The negative copula - 아니다",       "용언: 부정 지정사"),
@@ -347,6 +347,10 @@ tm(  # 다들  wrongly seen as 다:MAG;들:XSN, s/b a single pronoun
 
 tm(  # .*:NNG;이:VCP;!verb-suffixes - 이 here s/b a subject marker.  is it only this noun??!!
     tagPat=r'([^:]+):NNG;이:VCP(?=;[^\:]+:(?!(EF|EC|EP|ETM|ETN)))', repl=r'\1:NNG;이:JKS', basePOS="JKS", posLabel="Subject\nMarker",
+)
+
+tm(  # ~:NP;는:ETM !! s/b ~:NP;는:JX, a topic-marker, not a verb-to-adjective particle
+    tagPat=r'([^:]+):(N[^;]+);(ㄴ|은|는):ETM', repl=r'\1:\2;\3:TOP', basePOS="JX", posLabel="Topic\nMarker",
 )
 
 # ------------ tag-sequence foldings & renamings ---------------
