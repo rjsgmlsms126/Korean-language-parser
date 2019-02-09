@@ -455,6 +455,7 @@ multiple-clause examples (아/어서, ~면, ...)
 병아리나 물고기도 키워 본 적 없어요?  - gets 키워 본 intermixed wrongly
 
 Fails:
+날씨가 더울 테니 따뜻하게 입으렴! - 
 중국 음식을 좋아하기 - not a complete sentence, but declared ok by grammar checker,  note the 을 makes it more than one phrase, but accepting more overrides sentence
 나는 일하러 달려갈 것이다. 그렇지 않으면 나는 거기에 차를 몰고 갈 것이다.   - the "그렇지 않으면" is just "Or,"
 추우면 못 뛰니까 안 뛰겠다.  - two conditionals in one sentene
