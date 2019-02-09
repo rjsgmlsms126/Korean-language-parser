@@ -455,6 +455,7 @@ multiple-clause examples (아/어서, ~면, ...)
 병아리나 물고기도 키워 본 적 없어요?  - gets 키워 본 intermixed wrongly
 
 Fails:
+뭔가 모르는 일이 있었나요? - doesnt lile the expansion of the first word to 뭐: NP, 이: VCP, ㄴ가: EC
 요즘에는 장르가 다양해졌어요  -  doesn't like the topic marker after the opening adverbial phrase, also the 지 aux verb should be marked as a 'with-the-characteristics-of suffix'
 저는 주로 주인공을 보고 선택해요.  - the auxiliary connector should be part of the main (first) verb(??)   Actually, this is probably OK
 중국 음식을 좋아하기 - not a complete sentence, but declared ok by grammar checker,  note the 을 makes it more than one phrase, but accepting more overrides sentence

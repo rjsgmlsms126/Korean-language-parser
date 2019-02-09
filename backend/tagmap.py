@@ -613,10 +613,10 @@ tm( # ~기나 하-  just
     refs={ },
 )
 
-# ------ predicate ending forms ------  mapping to PSX.* & renaming VerbSuffix
+# ------ predicate ending forms ------  mapping to PSXEP/EF.* & renaming VerbSuffix
 
 tm( # 었 past-tense suffix
-    tagPat=r'(았|었):EP', repl=r'\1:PSX',
+    tagPat=r'(았|었):EP', repl=r'\1:PSXEP',
     basePOS="EP", posLabel="Past tense\nMarker", descr="Past-tense particle",
     nodeRename="Verb Suffix:Past Tense",
     refs={"ttmik": "/lessons/l1l17", "htsk": "/unit1/unit-1-lessons-1-8/unit-1-lesson-5/#vpast"},
@@ -624,7 +624,7 @@ tm( # 었 past-tense suffix
 )
 
 tm( # ㄹ/를 거 이다 future-tense suffix pattern
-    tagPat=r'(ㄹ|을|를):ETM;거:NNB;이:VCP', repl=r'\1 거 이:PSX',
+    tagPat=r'(ㄹ|을|를):ETM;거:NNB;이:VCP', repl=r'\1 거 이:PSXEP',
     basePOS="VX", posLabel="Future tense\nAuxiliary", descr="Future-tense predicate suffix",
     nodeRename="Verb Suffix:Future Tense",
     wikiKey="none",
@@ -632,8 +632,17 @@ tm( # ㄹ/를 거 이다 future-tense suffix pattern
     notes="",
 )
 
+tm( # ~ㄴ/은가(요) question-forming connector descriptive-verb suffix
+    tagPat=r'(ㄴ가|은가|은가요):EC', repl=r'\1:PSXEC',
+    basePOS="EC", posLabel="Question\nSuffix", descr="Question-forming suffix, used after descriptive verbs or the copula (이다); a softer form than ~(으)냐",
+    #nodeRename="AuxiliaryVerbForm:Seems/Looks",
+    wikiKey='',
+    refs={"htsk": "/unit1/unit-1-lessons-17-25-2/lesson-21-asking-questions-in-korean-why-when-where-and-who/#214",
+          "itlk": "/question/457643" },
+)
+
 tm( # ~ㄴ/은가(요) question-ending descriptive-verb suffix
-    tagPat=r'(ㄴ가|은가|은가요):(EC|EF)', repl=r'\1:PSX',
+    tagPat=r'(ㄴ가|은가|은가요):EF', repl=r'\1:PSXEF',
     basePOS="EF", posLabel="Question\nSuffix", descr="Question-forming suffix, used after descriptive verbs or the copula (이다); a softer form than ~(으)냐",
     #nodeRename="AuxiliaryVerbForm:Seems/Looks",
     wikiKey='',

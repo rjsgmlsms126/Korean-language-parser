@@ -72,11 +72,11 @@ class KoreanParser(Parser):
 
     @grammarRule
     def connectingSuffix(self):
-        return self.lexer.next(r'.*:(EC|ADVEC.*|CEC.*)')
+        return self.lexer.next(r'.*:(EC|PSXEC.*|ADVEC.*|CEC.*)')
 
     @grammarRule
     def endingSuffix(self):
-        return self.lexer.next(r'.*:(EF)')
+        return self.lexer.next(r'.*:(EF|PSXEF.*)')
 
     @grammarRule
     def phrase(self):
@@ -245,7 +245,7 @@ class KoreanParser(Parser):
 
     @grammarRule
     def adverbFormingSuffix(self):
-        return self.lexer.next(r'.*:(EC)')
+        return self.lexer.next(r'.*:(EC|PSXEC.*)')
 
     @grammarRule
     def verbAndAuxiliary(self):
@@ -264,7 +264,7 @@ class KoreanParser(Parser):
 
     @grammarRule
     def auxiliaryVerbConnector(self):
-        return self.lexer.next(r'.*:(EC)')
+        return self.lexer.next(r'.*:(EC|PSXEC.*)')
 
     @grammarRule
     def auxiliaryVerbPattern(self):
@@ -281,7 +281,7 @@ class KoreanParser(Parser):
 
     @grammarRule
     def verbSuffix(self):
-        return self.lexer.next(r'.*:(EP|PSX.*)')
+        return self.lexer.next(r'.*:(EP|PSXEP.*)')
 
     @grammarRule
     def simpleNoun(self):
@@ -331,7 +331,7 @@ class KoreanParser(Parser):
 
     @grammarRule  # deprecated
     def adverbialPhraseConnector(self):
-        return self.lexer.next(r'.*:(EC)')
+        return self.lexer.next(r'.*:(EC|PSXEC.*)')
 
     @grammarRule
     def objectPhrase(self):
