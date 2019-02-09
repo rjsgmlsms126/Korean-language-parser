@@ -121,9 +121,10 @@
                 </div>
             </div>
 
-            <div v-if="wiktionaryUrl" class="k-row">
+            <div v-if="wiktionaryUrl" class="k-row">  <!-- deprecated for following -->
                 <iframe :src="wiktionaryUrl"  class="wiktionary-iframe"></iframe>
             </div>
+            <!-- definition popup -->
             <div id="definition" ref="defPopup" class="definition">
                 <div class="k-table">
                     <div class="border-row k-row"><div v-if="references.annotation" class="def-pos k-cell">{{references.annotation}}</div></div>
@@ -144,6 +145,10 @@
                             </li></ul></div>
                     </div>
                 </div>
+                <!-- conjugation -->
+                <div v-if="conjugation" class=k-table>
+
+                </div>
             </div>
         </div>
         <!-- following template text elements used for computing text display bounds before rendering trees -->
@@ -158,6 +163,10 @@
 </template>
 
 <script>
+
+import { Korean } from '../static/third_party/korean-conjugator.js'
+var KoreanConjugator = new Korean();
+
 export default {
     name: 'KoreanParser',
 
@@ -186,7 +195,8 @@ export default {
             mouseEnterX: null, mouseEnterY: null,
             definitionTimeout: null,
             terminalGap: 20, lineGap: 8,
-            treeMarginX: 20, treeMarginY: 20
+            treeMarginX: 20, treeMarginY: 20,
+            conjugation: null
 		};
 	},
 
@@ -480,12 +490,26 @@ export default {
             // display node reference popup
             this.references = r;
             this.nodeInDef = node;
+            this.conjugation = node.tag[0] == 'V' ? this.conjugate(node) : null;
             var popup = self.$refs["defPopup"];
             var x = event.clientX,
                 y = event.clientY;
             popup.style.top = (y + 12) + 'px';
             popup.style.left = (x + 12) + 'px';
             popup.classList.add("show");
+        },
+
+        conjugate: function(node) {
+            // conjugate verb using Song & Yoo-jin's conjugator
+            return null;
+            var word = node.word + '다';
+            var conjugation = [];
+            ['present', 'past', 'future', 'present continuous'].forEach(function(tense) {
+                var row = [];
+                ['causal', 'formal'].forEach(function (mode) {
+                    row.push(KoreanConjugator.conjugate(node, {'tense': tense, 'formaility': mode}))
+                })
+            })
         },
 
         nodeClick: function(node, event) {
