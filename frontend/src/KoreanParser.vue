@@ -7,7 +7,8 @@
             <div id="input-row" class="k-flexrow ">
                 <div id="input-title" >Korean sentence parser</div>
                 <div id="attribution">v0.8.4 - <a href="mailto:johnw3d@gmail.com">JBW</a>
-                    - based on the <a href="https://github.com/kakao/khaiii">Kakao Hangul Analyzer III</a>
+                    - based on the <a href="https://github.com/kakao/khaiii">Kakao Hangul Analyzer III</a>, 
+                    the <a href="https://github.com/llipio/conjugator">Llip Conjugator</a>
                     and <a href="https://github.com/johnw3d/Korean-language-parser">JBW's phrase parser</a></div>
             </div>
             <!-- input row -->
@@ -804,12 +805,12 @@ document.onmouseup = function (e) {
         padding-left: 5px;
     }
     .formality {
-        color: rgb(75, 75, 75);
+        color: rgb(90, 90, 90);
         padding-left: 10px;
         text-align: center;
     }
     .tense {
-         color: rgb(75, 75, 75);
+         color: rgb(90, 90, 90);
         text-align: right;
     }
     .conjugation {
