@@ -6,9 +6,9 @@
             <!-- header row -->
             <div id="input-row" class="k-flexrow ">
                 <div id="input-title" >Korean sentence parser</div>
-                <div id="attribution">v0.8.3 - <a href="mailto:johnw3d@gmail.com">JBW</a>
+                <div id="attribution">v0.8.4 - <a href="mailto:johnw3d@gmail.com">JBW</a>
                     - based on the <a href="https://github.com/kakao/khaiii">Kakao Hangul Analyzer III</a>
-                    and <a href="https://github.com/johnw3d/Korean-language-parser">JBW's phrase parser</a></div> 
+                    and <a href="https://github.com/johnw3d/Korean-language-parser">JBW's phrase parser</a></div>
             </div>
             <!-- input row -->
             <div class="k-flexrow">
@@ -184,6 +184,8 @@ export default {
             translators: [{"title": "Google translate", "slug": "https://translate.google.com/#view=home&op=translate&sl=ko&tl=en&text=${sentence}"},
                           {"title": "Naver Papago translator", "slug": "https://papago.naver.com/?sk=ko&tk=en&st=${sentence}"},
                           {"title": "PNU spell-checker", "slug": "http://speller.cs.pusan.ac.kr"}],
+            verbTenses: ['present', 'past', 'future', 'present continuous'],
+            formalities: ['causal', 'formal'],
 		    levelHeight: 50,
             terminalHeight: 0, tagLabelHeight: 0,
             treeWidth: 0, treeHeight: 0,
@@ -501,15 +503,13 @@ export default {
 
         conjugate: function(node) {
             // conjugate verb using Song & Yoo-jin's conjugator
-            return null;
             var word = node.word + '다';
-            var conjugation = [];
-            ['present', 'past', 'future', 'present continuous'].forEach(function(tense) {
-                var row = [];
-                ['causal', 'formal'].forEach(function (mode) {
-                    row.push(KoreanConjugator.conjugate(node, {'tense': tense, 'formaility': mode}))
-                })
-            })
+            var conjugation = this.verbTenses.map(function(tense) {
+                return this.formalities.map(function (formality) {
+                    return KoreanConjugator.conjugate(word, {'tense': tense, 'formality': formality});
+                });
+            });
+            return conjugation;
         },
 
         nodeClick: function(node, event) {
