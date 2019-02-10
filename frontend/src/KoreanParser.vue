@@ -56,7 +56,7 @@
                         </div>
                         <div class="k-flexrow parse-fail-log"><pre>{{ s.log }}</pre></div>
                     </template>
-                    <tenplate v-else>
+                    <template v-else>
                         <div class="output-row k-flexrow k-table">
                             <!-- div class="pos-list">
                                 <div v-for="phrase in s.phrases">
@@ -117,7 +117,7 @@
                             <div class="k-row"><div class="k-cell">ParseTree</div><pre class="k-cell">{{s.debugging.parseTree}}</pre></div>
                             <div class="k-row"><div class="k-cell">References</div><pre class="k-cell">{{s.debugging.references}}</pre></div>
                         </div>
-                    </tenplate>
+                    </template>
                 </div>
             </div>
 
@@ -136,7 +136,7 @@
                         <div class="k-cell def-label">{{def.partOfSpeech}}:</div>
                         <div class="k-cell"><ul><li v-for="w in def.text"><span>{{w}}</span></li></ul></div>
                     </div>
-                    <div v-if="references.wordRefs" class="k-row refs-row">
+                    <div v-if="references.wordRefs" class="k-row refs-row border-row">
                         <div class="k-cell def-label">References:</div>
                         <div class="k-cell"><ul>
                             <li  v-for="ref in references.wordRefs">
@@ -145,10 +145,25 @@
                             </li></ul></div>
                     </div>
                 </div>
-                <!-- conjugation -->
-                <div v-if="conjugation" class=k-table>
-
-                </div>
+                <!-- conjugations -->
+                <table v-if="conjugations" class="conjugations">
+                    <tr class="def-label"><td>Conjugations:</td><td></td><td class="formality">Informal</td><td class="formality">Polite</td></tr>
+                    <tr v-for="con in conjugations">
+                        <td class=""></td>
+                        <td class="tense">{{con[0]}}</td>
+                        <td class="conjugation">{{con[1]}}</td>
+                        <td class="conjugation">{{con[2]}}</td>
+                    </tr>
+                </table>
+                <!--div v-if="conjugations" class="k-table conjugations">
+                    <div class="k-cell def-label">Conjugations:</div>
+                    <div v-for="con in conjugations" class="k-row">
+                        <div class="k-cell"></div>
+                        <div class="k-cell tense">{{con[0]}}</div>
+                        <div class="k-cell conjugation">{{con[1]}}</div>
+                        <div class="k-cell conjugation">{{con[2]}}</div>
+                    </div>
+                </div -->
             </div>
         </div>
         <!-- following template text elements used for computing text display bounds before rendering trees -->
@@ -175,7 +190,7 @@ export default {
 		return {
 		    APIHost: "http://localhost:9000", // "http://localhost:9000", // "", // ""
 		    parsing: false,
-		    sentence: "", // "밥을 먹은 후에 손을 씻는다", // "khaiii의 빌드 및 설치에 관해서는 빌드 및 설치 문서를 참고하시기 바랍니다.", // "나는 저녁으로 매운 김치와 국과 밥을 먹고 싶어요.", // "나는 요리하는 것에 대해서 책을 썼어요.", // "저의 딸도 행복해요", // "저는 비싼 음식을 좋아해요", // "나는 요리하는 것에 대해서 책을 썼어요.", // "모두 와줘서 고마워요.", "중국 음식은 좋아하기 때문에 중국 음식을 먹었어요.", // "나는 요리하는 것에 대해서 책을 쓸 거예요.", // "나는 저녁으로 매운 김치와 국과 밥을 먹고 싶어요.", // null, // "나는 그것에 대해서 책을 쓸 거야",
+		    sentence: "저 작은 소년 밥을 먹다.", // "밥을 먹은 후에 손을 씻는다", // "khaiii의 빌드 및 설치에 관해서는 빌드 및 설치 문서를 참고하시기 바랍니다.", // "나는 저녁으로 매운 김치와 국과 밥을 먹고 싶어요.", // "나는 요리하는 것에 대해서 책을 썼어요.", // "저의 딸도 행복해요", // "저는 비싼 음식을 좋아해요", // "나는 요리하는 것에 대해서 책을 썼어요.", // "모두 와줘서 고마워요.", "중국 음식은 좋아하기 때문에 중국 음식을 먹었어요.", // "나는 요리하는 것에 대해서 책을 쓸 거예요.", // "나는 저녁으로 매운 김치와 국과 밥을 먹고 싶어요.", // null, // "나는 그것에 대해서 책을 쓸 거야",
 		    error: "",
             naverTranslation: "",
             sentences: [],
@@ -186,6 +201,7 @@ export default {
                           {"title": "PNU spell-checker", "slug": "http://speller.cs.pusan.ac.kr"}],
             verbTenses: ['present', 'past', 'future', 'present continuous'],
             formalities: ['causal', 'formal'],
+            conjugations: null,
 		    levelHeight: 50,
             terminalHeight: 0, tagLabelHeight: 0,
             treeWidth: 0, treeHeight: 0,
@@ -197,8 +213,7 @@ export default {
             mouseEnterX: null, mouseEnterY: null,
             definitionTimeout: null,
             terminalGap: 20, lineGap: 8,
-            treeMarginX: 20, treeMarginY: 20,
-            conjugation: null
+            treeMarginX: 20, treeMarginY: 20
 		};
 	},
 
@@ -492,7 +507,7 @@ export default {
             // display node reference popup
             this.references = r;
             this.nodeInDef = node;
-            this.conjugation = node.tag[0] == 'V' ? this.conjugate(node) : null;
+            this.conjugations = node.tag[0] == 'V' ? this.conjugate(node) : null;
             var popup = self.$refs["defPopup"];
             var x = event.clientX,
                 y = event.clientY;
@@ -503,13 +518,14 @@ export default {
 
         conjugate: function(node) {
             // conjugate verb using Song & Yoo-jin's conjugator
-            var word = node.word + '다';
-            var conjugation = this.verbTenses.map(function(tense) {
-                return this.formalities.map(function (formality) {
+            var self = this,
+                word = node.word + '다';
+            var conjugations = self.verbTenses.map(function(tense) {
+                return [tense].concat(self.formalities.map(function (formality) {
                     return KoreanConjugator.conjugate(word, {'tense': tense, 'formality': formality});
-                });
+                }));
             });
-            return conjugation;
+            return conjugations;
         },
 
         nodeClick: function(node, event) {
@@ -782,6 +798,24 @@ document.onmouseup = function (e) {
     .definition li div {
         font-size: 200%;
     }
+
+    .conjugations {
+        width: auto;
+        padding-left: 5px;
+    }
+    .formality {
+        color: rgb(75, 75, 75);
+        padding-left: 10px;
+        text-align: center;
+    }
+    .tense {
+         color: rgb(75, 75, 75);
+        text-align: right;
+    }
+    .conjugation {
+        padding-left: 10px;
+        text-align: center;
+   }
 
     /* toggle this class - hide and show the popup */
     .show {
