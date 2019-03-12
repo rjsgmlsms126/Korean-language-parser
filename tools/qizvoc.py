@@ -83,26 +83,27 @@ def getVoxFromPage(pageURL, importFile, destDir):
     for m in re.finditer(r'_wordTtsUrl":"\\/tts\\/ko\.mp3\?v=12\&b=(?P<b64>[^\&]+)\&s=(?P<s>[^\&]+)\&speed=83"', html):
         print(m.groupdict())
         b64, s = m.group('b64'), m.group('s')
-        mp3 = os.path.join(destDir, b64 + '.mp3')
-        mp3Files[b64] = mp3
+        clean_b64 = b64 + "=" * ((4 - len(b64) % 4) % 4)
+        mp3 = os.path.join(destDir, clean_b64 + '.mp3')
+        mp3Files[clean_b64] = mp3
         getMP3(conn, b64, s, mp3)
 
     #
     conn.close()
     #
     with open(importFile) as inf:
-        with open(os.path.join(destDir, "import_plus_vox.txt"), "w") as outf:
+        with open(os.path.join(destDir, os.path.basename(importFile).rsplit('.')[0] + "-vox.txt"), "w") as outf:
             for i, line in enumerate(inf):
                 line = line.strip()
                 if not line or line.startswith('#'):
                     continue
                 korean, english = line.split(';')
                 b64 = base64.b64encode(korean.encode('utf-8')).decode('utf-8')
-                mp3File = mp3Files.get(b64)
+                mp3File = mp3Files.get(b64.replace('+', '-').replace('/', '_'))
                 if mp3File:
-                    print("{0};{1};[sound:{2}]".format(korean, english, mp3File), file=outf)
+                    print("{0};{1};[sound:{2}]".format(korean, english, os.path.basename(mp3File)), file=outf)
                 else:
-                    print("Missing mp3 file for ", korean, english)
+                    print("Missing mp3 file for ", korean, english, b64)
 
 # https://quizlet.com/338582237/lesson-9-flash-cards/
 # _wordTtsUrl":"\/tts\/ko.mp3?v=12&b=67Cp66y47ZWY64uk&s=Fzhe-REz&speed=83"
