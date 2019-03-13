@@ -97,11 +97,11 @@ def getVoxFromPage(pageURL, importFile, destDir):
                 line = line.strip()
                 if not line or line.startswith('#'):
                     continue
-                korean, english = line.split(';')
+                korean, english = line.split('\t' if '\t' in line else ';')
                 b64 = base64.b64encode(korean.encode('utf-8')).decode('utf-8')
                 mp3File = mp3Files.get(b64.replace('+', '-').replace('/', '_'))
                 if mp3File:
-                    print("{0};{1};[sound:{2}]".format(korean, english, os.path.basename(mp3File)), file=outf)
+                    print("{0}\t{1}\t[sound:{2}]".format(korean, english, os.path.basename(mp3File)), file=outf)
                 else:
                     print("Missing mp3 file for ", korean, english, b64)
 
@@ -110,8 +110,8 @@ def getVoxFromPage(pageURL, importFile, destDir):
 
 if __name__ == "__main__":
     #
-    getVoxFromPage("https://quizlet.com/338582237/lesson-9-flash-cards/",
-                   "/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/htsk-lesson9.txt",
+    getVoxFromPage("https://quizlet.com/371009127/topik-1-50-flash-cards/",
+                   "/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/topik-1-50.txt",
                    "/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/")
 
     # getVox("/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/htsk-lesson9.txt", "/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/")
