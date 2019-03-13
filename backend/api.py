@@ -268,14 +268,18 @@ def buildParseTree(chunkTree, showAllLevels=False):
 def getTranslation(s):
     "retrieves Naver/Papago NMT translation for the given string"
     #
-    failReason = translatedText = ''
-    data = urllib.parse.urlencode({"source": "ko", "target": "en", "text": s, })
-    headers = {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-               "X-Naver-Client-Id": "P3YGzu2suEI1diX0DarY",
-               "X-Naver-Client-Secret": "9yhV2ea0wC"}
-    conn = http.client.HTTPSConnection("openapi.naver.com")
-    conn.request("POST", "/v1/papago/n2mt", data, headers)
-    response = conn.getresponse()
+    try:
+        failReason = translatedText = ''
+        data = urllib.parse.urlencode({"source": "ko", "target": "en", "text": s, })
+        headers = {"Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                   "X-Naver-Client-Id": "P3YGzu2suEI1diX0DarY",
+                   "X-Naver-Client-Secret": "9yhV2ea0wC"}
+        conn = http.client.HTTPSConnection("openapi.naver.com")
+        conn.request("POST", "/v1/papago/n2mt", data, headers)
+        response = conn.getresponse()
+    except:
+        # server down?
+        return None, "Server not responding"
     #
     if response.status != 200:
         failReason = response.reason

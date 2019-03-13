@@ -97,11 +97,11 @@ def getVoxFromPage(pageURL, importFile, destDir):
                 line = line.strip()
                 if not line or line.startswith('#'):
                     continue
-                korean, english = line.split('\t' if '\t' in line else ';' )
+                korean, english = line.split('\t' if '\t' in line else ';')
                 b64 = base64.b64encode(korean.encode('utf-8')).decode('utf-8')
                 mp3File = mp3Files.get(b64.replace('+', '-').replace('/', '_'))
                 if mp3File:
-                    print("{0};{1};[sound:{2}]".format(korean, english, os.path.basename(mp3File)), file=outf)
+                    print("{0}\t{1}\t[sound:{2}]".format(korean, english, os.path.basename(mp3File)), file=outf)
                 else:
                     print("Missing mp3 file for ", korean, english, b64)
 
