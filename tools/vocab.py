@@ -7,7 +7,7 @@ import base64, os, re, sys
 from collections import defaultdict
 import json, time
 from pprint import pprint
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 
 topikPOSMap = {
     "1":  "명",   # noun
@@ -27,7 +27,7 @@ def loadNIKLList(filename):
     "load up the raw NIKL word list from .csv"
     niklWords = defaultdict(lambda: defaultdict(list))
     index = 0
-    with open(filename) as infile:
+    with open(os.path.expanduser(filename)) as infile:
         for line in infile:
             fields = line.strip().split(',')
             if len(fields) == 5 and len(fields[0]) and fields[0][0].isdigit():
@@ -45,7 +45,7 @@ def loadTOPIKList(filename):
     #
     topikWords = defaultdict(lambda: defaultdict(list))
     index = 0
-    with open(filename) as infile:
+    with open(os.path.expanduser(filename)) as infile:
         for line in infile:
             fields = line.strip().split('\t')
             if len(fields) == 3:
@@ -100,6 +100,7 @@ for pos in ('suffix', 'particle', 'determiners', 'counters', 'morphemes', 'prefi
 def getWiktionaryDeets(filename, words):
     "get wiktionary details for each word"
     # chcek if JSON already present
+    filename = os.path.expanduser(filename)
     if os.path.exists(filename):
         with open(filename) as wdjson:
             return json.load(wdjson)
@@ -123,6 +124,7 @@ def getWiktionaryDeets(filename, words):
 def getCombined(filename, niklWords, wikDeets):
     "get combined details for each word"
     # chcek if JSON already present
+    filename = os.path.expanduser(filename)
     if os.path.exists(filename):
         with open(filename) as cdjson:
             return json.load(cdjson)
@@ -137,8 +139,8 @@ def getCombined(filename, niklWords, wikDeets):
 
 if __name__ == "__main__":
     #
-    niklWords = loadNIKLList("/Users/jwainwright/Dropbox/Documents/한국어/www.korean.go.kr/한국어 학습용 어휘 목록.csv")
-    topik6KWords = loadTOPIKList("/Users/jwainwright/Dropbox/Documents/한국어/www.korean.go.kr/TOPIK6000.txt")
+    niklWords = loadNIKLList("~/Dropbox/Documents/한국어/www.korean.go.kr/한국어 학습용 어휘 목록.csv")
+    topik6KWords = loadTOPIKList("~/Dropbox/Documents/한국어/www.korean.go.kr/TOPIK6000.txt")
     #
     # initial TOPIK-list definition merge
     addTopikDefs(niklWords, topik6KWords)
@@ -150,10 +152,10 @@ if __name__ == "__main__":
     #             pprint(entries)
     #
     # get wiktionary details
-    wiktionaryDeets = getWiktionaryDeets("/Users/jwainwright/Dropbox/Documents/한국어/www.korean.go.kr/wiktionary-deets.json", niklWords.keys())
+    wiktionaryDeets = getWiktionaryDeets("~/Dropbox/Documents/한국어/www.korean.go.kr/wiktionary-deets.json", niklWords.keys())
     #
     # get uncombined defs
-    combinedDefs = getCombined("/Users/jwainwright/Dropbox/Documents/한국어/www.korean.go.kr/comnined-defs.json", niklWords, wiktionaryDeets)
+    combinedDefs = getCombined("~/Dropbox/Documents/한국어/www.korean.go.kr/combined-defs.json", niklWords, wiktionaryDeets)
 
     #
     print("end")
