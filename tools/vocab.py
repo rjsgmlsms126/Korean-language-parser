@@ -23,6 +23,11 @@ topikPOSMap = {
     "불": "불",  # unknown
 }
 
+# hangul & english unicode ranges
+ranges = [(0, 0x036f), (0x3130, 0x318F), (0xAC00, 0xD7AF), (0x1100, 0x11FF), (0x1e00, 0x2c00), (0x2022, 0x2022)]
+isHangulOrEnglish = lambda s: all(any(ord(c) >= r[0] and ord(c) <= r[1] for r in ranges) for c in s)
+isHangul = lambda s: all(any(ord(c) >= r[0] and ord(c) <= r[1] for r in ranges[1:]) for c in s)
+
 def loadNIKLList(filename):
     "load up the raw NIKL word list from .csv"
     niklWords = defaultdict(lambda: defaultdict(list))
@@ -134,6 +139,7 @@ def getCombined(filename, niklWords, wikDeets):
     #
     return combinedDefs
 
+def genDefList(combinedDefs)
 
 if __name__ == "__main__":
     #
