@@ -5,9 +5,10 @@ __author__ = 'jwainwright'
 import http.client, urllib.parse
 import base64, os, re, sys
 from collections import defaultdict
+from itertools import chain
 import json, time
 from pprint import pprint
-#from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 
 topikPOSMap = {
     "1":  "명",   # noun
@@ -21,6 +22,20 @@ topikPOSMap = {
     "9":  "수",   # number
     "10": "감",   # interjection
     "불": "불",  # unknown
+}
+
+posLabel = {
+    "명":    "noun",
+    "동":    "verb",
+    "보":    "adverb",
+    "형":    "adjective",
+    "의":    "bound noun",
+    "관":    "determiner",
+    "고":    "proper noun",
+    "대":    "pronoun",
+    "수":    "number",
+    "감":    "interjection",
+    "불":    "unknown",
 }
 
 # hangul & english unicode ranges
@@ -70,10 +85,10 @@ def addTopikDefs(dest, src):
             if word in src and pos in src[word]:
                 srcEntries = src[word][pos]
                 if len(entries) > 1 or len(srcEntries) > 1:
-                    pass
-                    #pprint(entries, width=160)
-                    #pprint(srcEntries, width=160)
-                    #print("---------")
+                    #pass
+                    pprint(entries, width=160)
+                    pprint(srcEntries, width=160)
+                    print("---------")
                 else:
                     entries[0]['topikDef'] = srcEntries[0]['topikDef'].replace(' or ', ', ')
 
@@ -126,30 +141,49 @@ def getWiktionaryDeets(filename, words):
     #
     return wd
 
-def getCombined(filename, niklWords, wikDeets):
+def getCombined(filename, niklWords, topik6KWords, wikDeets):
     "get combined details for each word"
-    # chcek if JSON already present
+    # check if JSON already present
     filename = os.path.expanduser(filename)
     if os.path.exists(filename):
         with open(filename) as cdjson:
             return json.load(cdjson)
     # else create
     # gather & store as uncombined source JSON
-    combinedDefs = { word: dict(nikl=niklDef, wik=wikDeets.get(word)) for word, niklDef in niklWords.items() }
+    lowIndex = lambda w: min(x['index'] for x in chain(*list(niklWords[w].values())))
+    combinedDefs = { word: dict(index=lowIndex(word), nikl=niklDef, wik=wikDeets.get(word), topik=topik6KWords.get(word)) for word, niklDef in niklWords.items() }
     with open(filename, "w") as cdjson:
         json.dump(combinedDefs, cdjson)
     #
     return combinedDefs
 
-def genDefList(combinedDefs)
+def genDefList(combinedDefs):
+    "generate lowest-index sorted list with extracted definitions"
+    for word in sorted(combinedDefs.keys(), key=lambda w: combinedDefs[w]['index']):
+        cd = combinedDefs[word]
+        #
+        # gather topik & wiktionary defs
+        topik = cd.get('topik')
+        if topik:
+            tds = '; '.join("({0}): {1}".format(posLabel.get(pos, '?'), ', '.join(e['topikDef'] for e in entries)) for pos, entries in topik.items())
+        else:
+            tds = ''
+        wkdl = []
+        for wd in cd['wik']:
+            for d in wd.get('definitions',[]):
+                if d['partOfSpeech'] != 'syllable':
+                    wkdl.append("({0}): {1}".format(d['partOfSpeech'], ', '.join(t for t in d['text'] if not isHangul(t[0]))))
+        wds = '; '.join(wkdl)
+        #
+        print(cd['index'], word, tds, wds)
 
 if __name__ == "__main__":
     #
     niklWords = loadNIKLList("~/Dropbox/Documents/한국어/www.korean.go.kr/한국어 학습용 어휘 목록.csv")
     topik6KWords = loadTOPIKList("~/Dropbox/Documents/한국어/www.korean.go.kr/TOPIK6000.txt")
     #
-    # initial TOPIK-list definition merge
-    addTopikDefs(niklWords, topik6KWords)
+    # # initial TOPIK-list definition merge
+    # addTopikDefs(niklWords, topik6KWords)
     #
     # for word, psos in niklWords.items():
     #     for pos, entries in psos.items():
@@ -161,7 +195,9 @@ if __name__ == "__main__":
     wiktionaryDeets = getWiktionaryDeets("~/Dropbox/Documents/한국어/www.korean.go.kr/wiktionary-deets.json", niklWords.keys())
     #
     # get uncombined defs
-    combinedDefs = getCombined("~/Dropbox/Documents/한국어/www.korean.go.kr/combined-defs.json", niklWords, wiktionaryDeets)
-
+    combinedDefs = getCombined("~/Dropbox/Documents/한국어/www.korean.go.kr/combined-defs.json", niklWords, topik6KWords, wiktionaryDeets)
+    #
+    # generate definitions list
+    genDefList(combinedDefs)
     #
     print("end")
