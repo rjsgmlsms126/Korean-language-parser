@@ -159,23 +159,35 @@ def getCombined(filename, niklWords, topik6KWords, wikDeets):
 
 def genDefList(combinedDefs):
     "generate lowest-index sorted list with extracted definitions"
-    for word in sorted(combinedDefs.keys(), key=lambda w: combinedDefs[w]['index']):
-        cd = combinedDefs[word]
-        #
-        # gather topik & wiktionary defs
-        topik = cd.get('topik')
-        if topik:
-            tds = '; '.join("({0}): {1}".format(posLabel.get(pos, '?'), ', '.join(e['topikDef'] for e in entries)) for pos, entries in topik.items())
-        else:
-            tds = ''
-        wkdl = []
-        for wd in cd['wik']:
-            for d in wd.get('definitions',[]):
-                if d['partOfSpeech'] != 'syllable':
-                    wkdl.append("({0}): {1}".format(d['partOfSpeech'], ', '.join(t for t in d['text'] if not isHangul(t[0]))))
-        wds = '; '.join(wkdl)
-        #
-        print(cd['index'], word, tds, wds)
+    with open(os.path.expanduser("~/Dropbox/Documents/한국어/www.korean.go.kr/list.csv"), "w", encoding="utf-8") as outf:
+        for word in sorted(combinedDefs.keys(), key=lambda w: combinedDefs[w]['index']):
+            cd = combinedDefs[word]
+            #
+            # gather topik & wiktionary defs
+            topik = cd.get('topik')
+            if topik:
+                tds = '; '.join("{1} ({0})".format(posLabel.get(pos, '?'), ', '.join(e['topikDef'] for e in entries)) for pos, entries in topik.items())
+            else:
+                tds = ''
+            wkdl = []
+            wik = cd.get('wik')
+            if wik:
+                for wd in wik:
+                    for d in wd.get('definitions',[]):
+                        if d['partOfSpeech'] not in ('syllable', 'suffix', 'particle'):
+                            wkdl.append("{1} ({0})".format(d['partOfSpeech'], ', '.join(t for t in d['text'] if t and not isHangul(t[0]))))
+                wds = '; '.join(wkdl)
+            else:
+                wds = ''
+            # cosmetic cleanups
+            def cleanup(s):
+                s = s.replace('\n', ';').replace(' (unknown)', '')
+                s = re.sub(r'(\w),(\w)', r'\1, \2', s)
+                return s.capitalize().strip()
+            tds = cleanup(tds)
+            wds = cleanup(wds)
+            # write csv
+            outf.write(str(cd['index']) + '\t' + word + '\t' + tds + '\t' + wds + '\n')
 
 if __name__ == "__main__":
     #
