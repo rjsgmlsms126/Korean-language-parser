@@ -159,35 +159,43 @@ def getCombined(filename, niklWords, topik6KWords, wikDeets):
 
 def genDefList(combinedDefs):
     "generate lowest-index sorted list with extracted definitions"
-    with open(os.path.expanduser("~/Dropbox/Documents/한국어/www.korean.go.kr/list.csv"), "w", encoding="utf-8") as outf:
-        for word in sorted(combinedDefs.keys(), key=lambda w: combinedDefs[w]['index']):
-            cd = combinedDefs[word]
-            #
-            # gather topik & wiktionary defs
-            topik = cd.get('topik')
-            if topik:
-                tds = '; '.join("{1} ({0})".format(posLabel.get(pos, '?'), ', '.join(e['topikDef'] for e in entries)) for pos, entries in topik.items())
-            else:
-                tds = ''
-            wkdl = []
-            wik = cd.get('wik')
-            if wik:
-                for wd in wik:
-                    for d in wd.get('definitions',[]):
-                        if d['partOfSpeech'] not in ('syllable', 'suffix', 'particle'):
-                            wkdl.append("{1} ({0})".format(d['partOfSpeech'], ', '.join(t for t in d['text'] if t and not isHangul(t[0]))))
-                wds = '; '.join(wkdl)
-            else:
-                wds = ''
-            # cosmetic cleanups
-            def cleanup(s):
-                s = s.replace('\n', ';').replace(' (unknown)', '')
-                s = re.sub(r'(\w),(\w)', r'\1, \2', s)
-                return s.capitalize().strip()
-            tds = cleanup(tds)
-            wds = cleanup(wds)
-            # write csv
-            outf.write(str(cd['index']) + '\t' + word + '\t' + tds + '\t' + wds + '\n')
+    with open(os.path.expanduser("~/Dropbox/Documents/한국어/www.korean.go.kr/fulllist.csv"), "w", encoding="utf-8") as fullList:
+        with open(os.path.expanduser("~/Dropbox/Documents/한국어/www.korean.go.kr/qlist.csv"), "w", encoding="utf-8") as qList:
+            for word in sorted(combinedDefs.keys(), key=lambda w: combinedDefs[w]['index']):
+                cd = combinedDefs[word]
+                #
+                # gather topik & wiktionary defs
+                topik = cd.get('topik')
+                if topik:
+                    tds = '; '.join("{1} ({0})".format(posLabel.get(pos, '?'), ', '.join(e['topikDef'] for e in entries)) for pos, entries in topik.items())
+                else:
+                    tds = ''
+                wkdl = []; wkdpl = []
+                wik = cd.get('wik')
+                if wik:
+                    for wd in wik:
+                        for d in wd.get('definitions',[]):
+                            if d['partOfSpeech'] not in ('syllable', ):
+                                entry = "{1} ({0})".format(d['partOfSpeech'], ', '.join(t for t in d['text'] if t and not isHangul(t[0])))
+                                if d['partOfSpeech'] in ('suffix', 'particle'):
+                                    wkdpl.append(entry)
+                                else:
+                                    wkdl.append(entry)
+                    wds = '; '.join(wkdl)
+                    wdps = '; '.join(wkdpl)
+                else:
+                    wds = ''
+                # cosmetic cleanups
+                def cleanup(s):
+                    s = s.replace('\n', ';').replace(' (unknown)', '')
+                    s = re.sub(r'(\w),(\w)', r'\1, \2', s)
+                    return s.capitalize().strip()
+                tds = cleanup(tds)
+                wds = cleanup(wds)
+                wdps = cleanup(wdps)
+                # write list csv's
+                fullList.write(str(cd['index']) + '\t' + word + '\t' + tds + '\t' + wds + '\t' + wdps + '\n')
+                qList.write(word + '\t' + (tds or wds) + '\n')
 
 if __name__ == "__main__":
     #

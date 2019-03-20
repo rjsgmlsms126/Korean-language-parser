@@ -99,7 +99,7 @@ def getVoxFromPage(pageURL, importFile, destDir):
                     continue
                 korean, english = line.split('\t' if '\t' in line else ';')
                 b64 = base64.b64encode(korean.encode('utf-8')).decode('utf-8')
-                mp3File = mp3Files.get(b64.replace('+', '-').replace('/', '_'))
+                mp3File = mp3Files.get(b64.replace('+', '-').replace('/', '.'))
                 if mp3File:
                     print("{0}\t{1}\t[sound:{2}]".format(korean, english, os.path.basename(mp3File)), file=outf)
                 else:
@@ -110,8 +110,8 @@ def getVoxFromPage(pageURL, importFile, destDir):
 
 if __name__ == "__main__":
     #
-    getVoxFromPage("https://quizlet.com/371011289/topik-101-150-flash-cards/",
-                   "/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/topik-101-150.txt",
+    getVoxFromPage("https://quizlet.com/382859168/test1-flash-cards/",
+                   "/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/NIKL-1-2000.txt",
                    "/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/")
 
     # getVox("/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/htsk-lesson9.txt", "/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/")
