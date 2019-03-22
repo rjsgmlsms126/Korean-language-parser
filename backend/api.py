@@ -460,6 +460,7 @@ multiple-clause examples (아/어서, ~면, ...)
 병아리나 물고기도 키워 본 적 없어요?  - gets 키워 본 intermixed wrongly
 
 Fails:
+이번 실패는 계획이 꼼꼼하지 않은 탓이다.
 날씨가 더울 테니 따뜻하게 입으렴! - 
 뭔가 모르는 일이 있었나요? - doesnt lile the expansion of the first word to 뭐: NP, 이: VCP, ㄴ가: EC
 요즘에는 장르가 다양해졌어요  -  doesn't like the topic marker after the opening adverbial phrase, also the 지 aux verb should be marked as a 'with-the-characteristics-of suffix'

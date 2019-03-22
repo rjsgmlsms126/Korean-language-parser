@@ -24,7 +24,7 @@ topikPOSMap = {
     "불": "불",  # unknown
 }
 
-posLabel = {
+niklPosLabel = {
     "명":    "noun",
     "동":    "verb",
     "보":    "adverb",
@@ -167,7 +167,7 @@ def genDefList(combinedDefs):
                 # gather topik & wiktionary defs
                 topik = cd.get('topik')
                 if topik:
-                    tds = '; '.join("{1} ({0})".format(posLabel.get(pos, '?'), ', '.join(e['topikDef'] for e in entries)) for pos, entries in topik.items())
+                    tds = '; '.join("{1} ({0})".format(niklPosLabel.get(pos, '?'), ', '.join(e['topikDef'] for e in entries)) for pos, entries in topik.items())
                 else:
                     tds = ''
                 wkdl = []; wkdpl = []
@@ -196,6 +196,35 @@ def genDefList(combinedDefs):
                 # write list csv's
                 fullList.write(str(cd['index']) + '\t' + word + '\t' + tds + '\t' + wds + '\t' + wdps + '\n')
                 qList.write(word + '\t' + (tds or wds) + '\n')
+
+
+# ------  sample sentence gatherer ------
+
+#  first, build a word/POS concordance for the KAIST-corpora 60K sentence source
+#
+def genKAISTSentenceConcordance(defs, sentenceFilename):
+    "generates and stores a lookup by word & POS into a reference sentence table"
+    #
+    # load the sentences from our morpheme-analyzed list
+    index = 0
+    sentences = {}  # by index
+    concordance = defaultdict(list) # by morpheme:POS pair
+    #
+    with open(os.path.expanduser(sentenceFilename)) as sentenceFile:
+        for line in sentenceFile:
+            line = line.strip()
+            if line.startswith('['):
+                index += 1  # bump the sentence index
+                # ["How is the game?.", "시합 상황은 어떠니?", "시합:NNG;상황:NNG;은:JX;어떻:VA;니:EF"]
+                english, korean, morhpemes = json.loads(line)
+                sentences[index] = dict(e=english, k=korean, m=morhpemes)
+                # split by morpheme
+                for mp in morhpemes.split(';'):
+                    # for now, store comprehensive concordance by base:pos pair keying sentence index, even though common particles may not be needed
+                    concordance[mp].append(index)
+    #
+    
+
 
 if __name__ == "__main__":
     #
