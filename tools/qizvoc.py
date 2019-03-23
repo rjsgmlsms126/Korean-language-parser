@@ -110,8 +110,8 @@ def getVoxFromPage(pageURL, importFile, destDir):
 
 if __name__ == "__main__":
     #
-    getVoxFromPage("https://quizlet.com/382859168/test1-flash-cards/",
-                   "/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/NIKL-1-2000.txt",
+    getVoxFromPage("https://quizlet.com/383939417/nikl-2001-4000-flash-cards/",
+                   "/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/NIKL-2001-4000.txt",
                    "/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/")
 
     # getVox("/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/htsk-lesson9.txt", "/Users/jwainwright/Dropbox/Documents/한국어/Anki/import/")

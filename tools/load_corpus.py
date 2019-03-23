@@ -53,7 +53,9 @@ def loadCorpus(files):
 #
 if __name__ == "__main__":
     #
-    sentences = loadCorpus('/Users/jwainwright/Downloads/VUfHM5Uc6HwOcoy/Corpus10/*.txt')
-    with open('kaist.corpus.json', 'w') as outf:
+    sentences = loadCorpus('/Users/jwainwright/Downloads/KAIST-korean-english-corpus/Corpus10/*.txt')
+    with open('/tmp/kaist.corpus.json', 'w') as outf:
         for s in sentences:
-            outf.write('["{0}", "{1}", "{2}"]\n'.format(*s))
+            json.dump(list(s), outf)
+            outf.write("\n")
+            #outf.write('["{0}", "{1}", "{2}"]\n'.format(*s))
