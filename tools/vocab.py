@@ -328,12 +328,15 @@ def genKAISTSentenceConcordance(defs, sentenceFilename):
                 if tag[0] == 'V':
                     # verb, need to use Khaiii to get stem
                     key = khaiiiAPI.analyze(word)[0].morphs[0].lex.strip()
+                    if key[-1] == '다':
+                        # handle verbs that are also non-verbs and don't get decomposed by Khaiii (eg 보다)
+                        key = key[:-1]
                 else:
                     key = word
                 ccs = concordance.get(key + ':' + tag)
                 if ccs:
                     samples[word][niklPosLabel.get(pos, "unknown")] = ccs
-                    print("====== ", word, tag, "\n", "\n  ".join(sentences[i]['k'] + ": " + sentences[i]['e'] for i in ccs[:10]))
+                    print("====== ", word, niklPosLabel[pos], "\n  ", "\n  ".join(sentences[i]['k'] + ": " + sentences[i]['e'] for i in sorted(ccs, key=lambda i: len(sentences[i]['k']))[:10]))
     #
     # store samples mapping
     with open(baseName + "-samples-by-word.json", "w") as sjson:
