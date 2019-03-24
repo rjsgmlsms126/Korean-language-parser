@@ -2,7 +2,7 @@
 #
 #
 __author__ = 'jwainwright'
-import http.client, urllib.parse
+import http.client, urllib.parse, random
 import base64, os, re, sys
 from collections import defaultdict
 from itertools import chain
@@ -271,9 +271,12 @@ def genDefList(combinedDefs):
                 nds = cleanup(cd.get('naver', ''))
                 if len(tds + wds + nds) == 0:
                     print("*** no definition", word, index)
+                # short def
+                shortDef = tds or wds or nds
+                cd['short'] = shortDef
                 # write list csv's
                 fullList.write(str(index) + '\t' + str(cd['index']) + '\t' + word + '\t' + tds + '\t' + wds + '\t' + wdps + '\t' + nds + '\n')
-                qList.write(word + '\t' + (tds or wds or nds) + '\n')
+                qList.write(word + '\t' + shortDef + '\n')
 
 
 # ------  sample sentence gatherer ------
@@ -336,7 +339,8 @@ def genKAISTSentenceConcordance(defs, sentenceFilename):
                 ccs = concordance.get(key + ':' + tag)
                 if ccs:
                     samples[word][niklPosLabel.get(pos, "unknown")] = ccs
-                    print("====== ", word, niklPosLabel[pos], "\n  ", "\n  ".join(sentences[i]['k'] + ": " + sentences[i]['e'] for i in sorted(ccs, key=lambda i: len(sentences[i]['k']))[:10]))
+                    print("====== ", word, niklPosLabel[pos], ':', cd['short'],
+                          "\n  ", "\n  ".join(sentences[i]['k'] + ": " + sentences[i]['e'] for i in sorted(list(set(random.choices(ccs, k=20))), key=lambda i: len(sentences[i]['k']))[:10]))
     #
     # store samples mapping
     with open(baseName + "-samples-by-word.json", "w") as sjson:
@@ -364,8 +368,7 @@ if __name__ == "__main__":
     combinedDefs = getCombined("~/Dropbox/Documents/한국어/www.korean.go.kr/combined-defs.json", niklWords, topik6KWords, wiktionaryDeets)
     #
     # generate definitions list
-    if False:
-        genDefList(combinedDefs)
+    genDefList(combinedDefs)
     #
     #
     genKAISTSentenceConcordance(combinedDefs, "~/Dropbox/Documents/한국어/www.korean.go.kr/kaist.corpus-60k-sentences-unicode.json")
