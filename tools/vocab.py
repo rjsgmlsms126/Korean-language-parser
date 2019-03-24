@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup
 topikPOSMap = {
     "1":  "명",   # noun
     "2":  "동",   # verb
-    "3":  "보",   # adverb
+    "3":  "부",   # adverb
     "4":  "형",   # adjective
     "5":  "의",   # bound noun
     "6":  "관",   # determiner
@@ -27,7 +27,7 @@ topikPOSMap = {
 niklPosLabel = {
     "명":    "noun",
     "동":    "verb",
-    "보":    "adverb",
+    "부":    "adverb",
     "형":    "adjective",
     "의":    "bound noun",
     "관":    "determiner",
@@ -41,7 +41,7 @@ niklPosLabel = {
 niklPosTags = {
     "명":    ["NNG"],
     "동":    ["VV", "VX"],
-    "보":    ["MAG", "MAJ"],
+    "부":    ["MAG", "MAJ"],
     "형":    ["VA", "VCP", "VCN"],
     "의":    ["NNB"],
     "관":    ["MM"],
