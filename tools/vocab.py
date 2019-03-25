@@ -355,9 +355,10 @@ def genKAISTSentenceConcordance(defs, sentenceFilename):
                 ccs = concordance.get(key + ':' + tag)
                 if ccs:
                     samples[word][pos].extend(ccs)
-            if ccs:
+            if samples[word][pos]:
                 print("====== ", word, pos, ':', posDefStr,
-                      "\n  ", "\n  ".join(sentences[i]['k'] + ": " + sentences[i]['e'] for i in sorted(list(set(random.choices(ccs, k=20))), key=lambda i: len(sentences[i]['k']))[:10]))
+                      "\n  ", "\n  ".join(sentences[i]['k'] + ": " + sentences[i]['e'] for i in sorted(list(set(random.choices(samples[word][pos], k=20))),
+                                                                                                       key=lambda i: len(sentences[i]['k']))[:10]))
     #
     # store samples mapping
     with open(baseName + "-samples-by-word.json", "w") as sjson:
