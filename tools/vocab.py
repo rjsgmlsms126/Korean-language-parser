@@ -39,17 +39,17 @@ niklPosLabel = {
 }
 
 niklPosTags = {
-    "명":    ["NNG"],
-    "동":    ["VV", "VX"],
-    "부":    ["MAG", "MAJ"],
-    "형":    ["VA", "VCP", "VCN"],
-    "의":    ["NNB"],
-    "관":    ["MM"],
-    "고":    ["NNP"],
-    "대":    ["NP"],
-    "수":    ["NR"],
-    "감":    ["IC"],
-    "불":    ["ZZ"],
+    "noun":         ["NNG"],
+    "verb":         ["VV", "VX"],
+    "adverb":       ["MAG", "MAJ"],
+    "adjective":    ["VA", "VCP", "VCN"],
+    "bound noun":   ["NNB"],
+    "determiner":   ["MM"],
+    "proper noun":  ["NNP"],
+    "pronoun":      ["NP"],
+    "number":       ["NR"],
+    "interjection": ["IC"],
+    "unknown":      ["ZZ"],
 }
 
 # hangul & english unicode ranges
@@ -206,7 +206,7 @@ def getCombined(filename, niklWords, topik6KWords, wikDeets):
         if cd['topik']:
             continue
         wdef = cd['wik']
-        if len(wdef) >= 1 and wdef[0].get('definitions'):
+        if len(wdef) >= 1 and wdef[0].get('definitions') and word not in ("두", ):
             continue
         #
         naverDef, failReason = getTranslation(word)
@@ -226,37 +226,52 @@ def genDefList(combinedDefs):
             for word in sorted(combinedDefs.keys(), key=lambda w: combinedDefs[w]['index']):
                 cd = combinedDefs[word]
                 #
+                topikDefs = defaultdict(list)
                 # gather topik & wiktionary defs
                 topik = cd.get('topik')
                 if topik:
-                    tds = '; '.join("{1} ({0})".format(niklPosLabel.get(pos, '?'), ', '.join(e['topikDef'] for e in entries)) for pos, entries in topik.items())
-                else:
-                    tds = ''
-                wkdl = []; wkdpl = []
+                    for pos, entries in topik.items():
+                        tdp = topikDefs[niklPosLabel[pos]]
+                        for e in entries:
+                            if e['topikDef'] not in tdp:
+                                tdp.append(e['topikDef'])
+                #
+                wikDefs = defaultdict(list)
+                wikParticleDefs = defaultdict(list)
                 wik = cd.get('wik')
                 if wik:
                     for wd in wik:
                         for d in wd.get('definitions',[]):
-                            if d['partOfSpeech'] not in ('syllable', ):
-                                entry = "{1} ({0})".format(d['partOfSpeech'], ', '.join(t for t in d['text'] if t and not isHangul(t[0])))
-                                if d['partOfSpeech'] in ('suffix', 'particle'):
-                                    wkdpl.append(entry)
-                                else:
-                                    wkdl.append(entry)
-                    wds = '; '.join(wkdl)
-                    wdps = '; '.join(wkdpl)
-                else:
-                    wds = ''
+                            pos = d['partOfSpeech']
+                            if pos not in ('syllable', ):
+                                for t in d['text']:
+                                    if t and not isHangul(t[0]):
+                                        if pos in ('suffix', 'particle'):
+                                            if t not in wikParticleDefs[pos]:
+                                                wikParticleDefs[pos].append(t)
+                                        else:
+                                            if t not in wikDefs[pos]:
+                                                wikDefs[pos].append(t)
+                #
+                finalDefs = topikDefs or wikDefs or {niklPosLabel[list(cd['nikl'].keys())[0]]: cd['naver']}
+                # build the def strings from each source
+                tds = ' | '.join("{1} ({0})".format(pos, ('; '.join(entries))) for pos, entries in topikDefs.items())
+                wds = ' | '.join("{1} ({0})".format(pos, ('; '.join(entries))) for pos, entries in wikDefs.items())
+                wdps = ' | '.join("{1} ({0})".format(pos, ('; '.join(entries))) for pos, entries in wikParticleDefs.items())
+                fds = ' | '.join("{1} ({0})".format(pos, ('; '.join(entries))) for pos, entries in finalDefs.items())
+                #
                 index += 1
-                # cosmetic cleanups
-                def cleanup(s):
+                #
+                def cleanup(s, pos=None):
+                    # cosmetic cleanups
                     if s == '':
                         return s
-                    s = s.strip().replace('\n', ';').replace(' (unknown)', '')
+                    pos = pos or s
+                    s = s.strip().replace('\n', ';').replace(' (unknown)', '').replace('(to be)', 'to be')
                     s = re.sub(r'(\w),(\w)', r'\1, \2', s)
                     # add To... for verbs without same
-                    if word[-1] == "다" and ('verb' in s or 'adjective' in s) and not s.lower().startswith("to "):
-                        s = ("To be " if 'adjective' in s else "To ") + s[0].lower() + s[1:]
+                    if word[-1] == "다" and ('verb' in pos or 'adjective' in pos) and not s.lower().startswith("to "):
+                        s = ("To be " if 'adjective' in pos else "To ") + s[0].lower() + s[1:]
                     # check for dup def phrases??
                     # ss = re.sub(r'[,;]', '', s.lower())
                     # ssw = ss.split(' ')
@@ -265,18 +280,19 @@ def genDefList(combinedDefs):
                     if len(dts) != len(set(dts)):
                         print("Possible dups", index, s)
                     return s[0].capitalize() + s[1:]
+                # build the def strings
                 tds = cleanup(tds)
                 wds = cleanup(wds)
                 wdps = cleanup(wdps)
+                fds = cleanup(fds)
                 nds = cleanup(cd.get('naver', ''))
-                if len(tds + wds + nds) == 0:
+                if len(tds + wds + wdps + fds) == 0:
                     print("*** no definition", word, index)
-                # short def
-                shortDef = tds or wds or nds
-                cd['short'] = shortDef
                 # write list csv's
                 fullList.write(str(index) + '\t' + str(cd['index']) + '\t' + word + '\t' + tds + '\t' + wds + '\t' + wdps + '\t' + nds + '\n')
-                qList.write(word + '\t' + shortDef + '\n')
+                qList.write(word + '\t' + fds + '\n')
+                #
+                cd['posDefs'] = { pos: cleanup("; ".join(entries), pos) for pos, entries in finalDefs.items() }
 
 
 # ------  sample sentence gatherer ------
@@ -323,10 +339,10 @@ def genKAISTSentenceConcordance(defs, sentenceFilename):
         json.dump(concordance, djson, indent=2)
 
     # run over combined defs, gather sample sentences for various parts of speech
-    samples = defaultdict(dict)
+    samples = defaultdict(lambda: defaultdict(list))
     for word, cd in defs.items():
-        niklDef = cd['nikl']
-        for pos in niklDef.keys():
+        posDefs = cd['posDefs']
+        for pos, posDefStr in posDefs.items():
             for tag in niklPosTags.get(pos, ["ZZ"]):
                 if tag[0] == 'V':
                     # verb, need to use Khaiii to get stem
@@ -338,9 +354,10 @@ def genKAISTSentenceConcordance(defs, sentenceFilename):
                     key = word
                 ccs = concordance.get(key + ':' + tag)
                 if ccs:
-                    samples[word][niklPosLabel.get(pos, "unknown")] = ccs
-                    print("====== ", word, niklPosLabel[pos], ':', cd['short'],
-                          "\n  ", "\n  ".join(sentences[i]['k'] + ": " + sentences[i]['e'] for i in sorted(list(set(random.choices(ccs, k=20))), key=lambda i: len(sentences[i]['k']))[:10]))
+                    samples[word][pos].extend(ccs)
+            if ccs:
+                print("====== ", word, pos, ':', posDefStr,
+                      "\n  ", "\n  ".join(sentences[i]['k'] + ": " + sentences[i]['e'] for i in sorted(list(set(random.choices(ccs, k=20))), key=lambda i: len(sentences[i]['k']))[:10]))
     #
     # store samples mapping
     with open(baseName + "-samples-by-word.json", "w") as sjson:
