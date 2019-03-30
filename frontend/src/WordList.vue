@@ -11,7 +11,7 @@
                 </tr>
                 <tr>
                     <td v-if="selection && selection.row == rowIndex+1" colspan="10" class="definition-row">
-                        <div v-for="pos in selection.posDefs" class="definition">
+                        <div v-for="pos in selection.posDefs" class="div-definition">
                             <div v-if="pos.pos != 'unknown' || selection.posDefs.length == 1" class="def-div">
                                 <span class="pos">{{ pos.pos }}:</span><span class="pos-definition"> {{ pos.defStr }}</span>
                             </div>
@@ -85,7 +85,7 @@ export default {
                     wordStart = el.position().left,
                     wordCenter = wordStart + el.outerWidth() / 2,
                     left = Math.min(Math.max(15, wordStart - 30), $('body').outerWidth() - 700); //wordCenter - d.outerWidth() / 2;
-                this.definitionClass.innerHTML = ".definition { display: inline; position: relative; left: " + left + "px; }";
+                this.definitionClass.innerHTML = ".div-definition { display: inline; position: relative; left: " + left + "px; }";
             }
         },
 
@@ -93,7 +93,7 @@ export default {
             // create classes to be dynamically modified
             var css = document.createElement("style");
             css.type = "text/css";
-            css.innerHTML = ".definition { display: inline; position: relative; }";
+            css.innerHTML = ".dic-definition { display: inline; position: relative; }";
             document.body.appendChild(css);
             this.definitionClass = css;
         }
@@ -121,7 +121,7 @@ export default {
         border-radius: 3px;
         padding: 2px;
     }
-    
+
     .definition-row {
         /* text-align: center; */
         padding-top: 4px;
