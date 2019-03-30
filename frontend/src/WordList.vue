@@ -11,9 +11,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td v-if="selection && selection.row == rowIndex+1" colspan="10" class="def-row">
-                        <div v-for="pos in Object.keys(selection.posDefs)">
-                            {{ pos }}: {{ selection.posDefs[pos]}}
+                    <td v-if="selection && selection.row == rowIndex+1" colspan="10" class="definition-row">
+                        <div v-for="pos in Object.keys(selection.posDefs)" class="definition">
+                            <div class="def-div">{{ pos }}: {{ selection.posDefs[pos]}}</div>
                         </div>
                     </td>
                 </tr>
@@ -32,10 +32,12 @@ export default {
 		    APIHost: "http://localhost:9000", // "http://localhost:9000", // ""
             wordList: null,
             selection: null,
+            selectedCell: null
 		};
 	},
 
     mounted: function () {
+        this.createClasses();
         this.getWordList();
     },
 
@@ -62,7 +64,34 @@ export default {
 
         clickWord: function(cd, event) {
             // handle click on a word
-            this.selection = this.selection == cd ? null : cd;
+            var el = $(event.target);
+            if (this.selectedCell)
+                this.selectedCell.removeClass("selected-word");
+            if (this.selection == cd) {
+                // toggling off
+                this.selection = this.selectedCell = null;
+            }
+            else {
+                // select & highlight word
+                this.selection = cd;
+                el.addClass("selected-word");
+                this.selectedCell = el;
+                // compute offset for definition
+                var d = $($(".definition")[0]),
+                    wordStart = el.position().left,
+                    wordCenter = wordStart + el.outerWidth() / 2,
+                    left = wordCenter - d.outerWidth() / 2;
+                this.definitionClass.innerHTML = ".definition { display: inline; position: relative; left: " + (wordStart - 30) + "px; }";
+            }
+        },
+
+        createClasses: function() {
+            // create classes to be dynamically modified
+            var css = document.createElement("style");
+            css.type = "text/css";
+            css.innerHTML = ".definition { display: inline; position: relative; }";
+            document.body.appendChild(css);
+            this.definitionClass = css;
         }
 
     }
@@ -71,8 +100,32 @@ export default {
 
 <style>
 
-.word {
-    cursor: pointer;
-}
+    .index {
+        color: #a05252;;
+        font-size: 80%;
+        width: 50px;
+    }
+
+    .word {
+        cursor: pointer;
+        margin-left: 2px;
+    }
+
+    .selected-word {
+        background-color: #f7d4cd;
+        border: thin grey solid;
+        border-radius: 3px;
+        padding: 2px;
+    }
+    
+    .definition-row {
+        /* text-align: center; */
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    .def-div {
+        display: block;
+    }
 
 </style>
