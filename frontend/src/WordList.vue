@@ -2,7 +2,6 @@
 
 <template>
     <div>
-        Hello!!!
         <table v-if="wordList">
             <template v-for="(row, rowIndex) in wordList">
                 <tr>
@@ -12,8 +11,13 @@
                 </tr>
                 <tr>
                     <td v-if="selection && selection.row == rowIndex+1" colspan="10" class="definition-row">
-                        <div v-for="pos in Object.keys(selection.posDefs)" class="definition">
-                            <div class="def-div">{{ pos }}: {{ selection.posDefs[pos]}}</div>
+                        <div v-for="pos in selection.posDefs" class="definition">
+                            <div v-if="pos.pos != 'unknown' || selection.posDefs.length == 1" class="def-div">
+                                <span class="pos">{{ pos.pos }}:</span><span class="pos-definition"> {{ pos.defStr }}</span>
+                            </div>
+                            <div v-for="sample in pos.samples">
+                                <span class="sample-korean">{{ sample.k }}</span><span class="sample-english">{{ sample.e }}</span>
+                            </div>
                         </div>
                     </td>
                 </tr>
@@ -80,8 +84,8 @@ export default {
                 var d = $($(".definition")[0]),
                     wordStart = el.position().left,
                     wordCenter = wordStart + el.outerWidth() / 2,
-                    left = wordCenter - d.outerWidth() / 2;
-                this.definitionClass.innerHTML = ".definition { display: inline; position: relative; left: " + (wordStart - 30) + "px; }";
+                    left = Math.min(Math.max(15, wordStart - 30), $('body').outerWidth() - 700); //wordCenter - d.outerWidth() / 2;
+                this.definitionClass.innerHTML = ".definition { display: inline; position: relative; left: " + left + "px; }";
             }
         },
 
@@ -126,6 +130,26 @@ export default {
 
     .def-div {
         display: block;
+        padding-top: 2px;
+        padding-bottom: 6px;
+    }
+
+    .pos {
+        color: #003eff;
+    }
+
+    .pos-definition {
+        color: rgb(79, 120, 156);
+    }
+
+    .sample-korean {
+        color: #454545;
+        padding-left: 10px;
+        padding-right: 12px;
+    }
+
+    .sample-english {
+        color: rgb(79, 120, 156);
     }
 
 </style>

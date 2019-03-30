@@ -3,7 +3,7 @@
 #
 __author__ = 'jwainwright'
 
-import re, json
+import re, json, random
 from pprint import pprint, pformat
 from datetime import datetime
 import http.client, urllib.parse
@@ -126,14 +126,31 @@ def prepWordLists():
     "load & organize word lists"
     with open("./backend/data/combined-defs.json") as cdefsFile:
         cdefs = json.load(cdefsFile)
+    with open("./backend/data/samples-by-word.json") as samplesFile:
+        samples = json.load(samplesFile)
+    with open("./backend/data/sentence-dict.json") as sentenceFile:
+        sentences = json.load(sentenceFile)
     #
     wordList = []
     # build word table, row by column
     row = []
     colNum = rowNum = index = 1
     for cd in sorted(cdefs.values(), key=lambda c: c['index']):
-        cd['col'], cd['row'], cd['index'] = colNum, rowNum, index
-        row.append(cd)
+        word = cd['word']
+        posDefs = []
+        for pos, posDefStr in cd['posDefs'].items():
+            sss = []
+            pd = dict(pos=pos, defStr=posDefStr, samples=sss)
+            ss = samples.get(word, {}).get(pos)
+            if ss:
+                for i in sorted(list(set(random.choices(samples[word][pos], k=20))),
+                           key=lambda i: len(sentences[str(i)]['k']))[:10]:
+                    k = sentences[str(i)]['k']
+                    e = sentences[str(i)]['e']
+                    sss.append(dict(k=k, e=e[0].capitalize() + e[1:]))
+            posDefs.append(pd)
+        #
+        row.append(dict(word=word, col=colNum, row=rowNum, index=index, posDefs=posDefs))
         colNum += 1
         index += 1
         if colNum >= 10:
