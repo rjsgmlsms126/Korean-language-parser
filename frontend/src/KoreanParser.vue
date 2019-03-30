@@ -1,7 +1,7 @@
 <!-- main Korean sentence parser UI -->
 
 <template>
-    <div id="app" v-on:mouseup="appMouseUp($event)">
+    <div v-on:mouseup="appMouseUp($event)">
         <div class="k-flexcol">
             <!-- header row -->
             <div id="input-row" class="k-flexrow ">
@@ -588,7 +588,7 @@ document.onmouseup = function (e) {
 
 <style>
 
-    #app {
+    #korean-parser {
         font-family: Helvetica, simsun, nanumgothic, '나눔고딕', dotum, sans-serif;
         font-size: 112%;
         -webkit-tap-highlight-color: transparent;

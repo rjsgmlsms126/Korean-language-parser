@@ -45,12 +45,17 @@ def run_dev_server():
 
 logFile = None
 
-# ------------- main parser page ----------------------
+# ------------- main pages ----------------------
 
 @parserApp.route('/analyzer')
 def analyzer():
     "analyzer main page"
-    return render_template("/index.html")
+    return render_template("/index.html", app="parser")
+
+@parserApp.route('/word-list')
+def wordList():
+    "word-list main page"
+    return render_template("/index.html", app="word-list")
 
 # ============== API handlers =========================
 
@@ -114,6 +119,39 @@ def tranlsate():
         return jsonify(dict(result="FAIL", reason=failReason))
     #
     return jsonify(dict(result="OK", translatedText=translatedText))
+
+# ------------ National Institute of the Korean Language 6000 word list + KAIST samples sentences --------------
+
+def prepWordLists():
+    "load & organize word lists"
+    with open("./backend/data/combined-defs.json") as cdefsFile:
+        cdefs = json.load(cdefsFile)
+    #
+    wordList = []
+    # build word table, row by column
+    row = []
+    colNum = rowNum = index = 1
+    for cd in sorted(cdefs.values(), key=lambda c: c['index']):
+        cd['col'], cd['row'], cd['index'] = colNum, rowNum, index
+        row.append(cd)
+        colNum += 1
+        index += 1
+        if colNum >= 10:
+            wordList.append(row)
+            colNum = 0
+            row = []
+            rowNum += 1
+    #
+    return wordList, []
+
+wordList, sentences = prepWordLists()
+
+@parserApp.route('/get-word-list/')
+def getWordList():
+    "load, format & return NIKL word lists & KAIST samples"
+    #
+    #
+    return jsonify(dict(result="OK", wordList=wordList))
 
 # ---------  API utility functions ---------------
 

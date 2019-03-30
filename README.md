@@ -100,7 +100,7 @@ To run the hot-reloading development version of the front-end, in the same direc
 # serve with hot reload at localhost:8080
 $ npm run dev
 ```
-In this case, point a browser at [http://localhost:8080/analyzer](http://localhost:9000/analyzer) to lauch the parser front end.
+In this case, point a browser at [http://localhost:8080/analyzer](http://localhost:8080/analyzer) to lauch the parser front end.
 
 ## Implementation notes
 

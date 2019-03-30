@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-	<!-- Non vue related imports -->
-	<script type="text/javascript" src="static/third_party/jquery/jquery-2.2.2.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="static/third_party/jquery/jquery-ui-1.12.1.css"/>
-	<script type="text/javascript" src="static/third_party/jquery/jquery-ui-1.12.1.js"></script>
+        <!-- Non vue related imports -->
+        <script type="text/javascript" src="static/third_party/jquery/jquery-2.2.2.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="static/third_party/jquery/jquery-ui-1.12.1.css"/>
+        <script type="text/javascript" src="static/third_party/jquery/jquery-ui-1.12.1.js"></script>
+        <script>
+            window.app = "word-list"; // "{{ app }}"; // "parser"; //
+        </script>
+        <title>parser</title>
+    </head>
 
-    <title>parser</title>
-  </head>
-
-  <body>
-    <div id="korean-parser"></div>
-    <!-- built files will be auto injected -->
-  </body>
+    <body>
+        <div id="body">
+            <korean-parser v-if="app == 'parser'" id="korean-parser"></korean-parser>
+            <word-list v-if="app == 'word-list'" id="word-list"></word-list>
+            <!-- built files will be auto injected -->
+        </div>
+    </body>
 </html>

@@ -68,7 +68,7 @@ def loadNIKLList(filename):
                 index += 1
                 rank, word, pos, extras, level = fields
                 word = re.sub(r'\d+$', '', word.strip())
-                entry = dict(word=word, index=index, rank=int(rank), pos=pos, extras=extras, level=level)
+                entry = dict(index=index, rank=int(rank), pos=pos, extras=extras, level=level)
                 # list of entries for each POS for each word
                 niklWords[word][pos].append(entry)
     #
@@ -86,7 +86,7 @@ def loadTOPIKList(filename):
                 index += 1
                 pos, word, definition = fields
                 pos = topikPOSMap.get(pos, "불")
-                entry = dict(word=word, index=index, pos=pos, topikDef=definition)
+                entry = dict(index=index, pos=pos, topikDef=definition)
                 topikWords[word][pos].append(entry)
     #
     return topikWords
@@ -200,7 +200,7 @@ def getCombined(filename, niklWords, topik6KWords, wikDeets):
     # gather & store as uncombined source JSON
     lowIndex = lambda w: min(x['index'] for x in chain(*list(niklWords[w].values())))
     # build combined record
-    combinedDefs = { word: dict(index=lowIndex(word), nikl=niklDef, wik=wikDeets.get(word), topik=topik6KWords.get(word)) for word, niklDef in niklWords.items() }
+    combinedDefs = { word: dict(word=word, index=lowIndex(word), nikl=niklDef, wik=wikDeets.get(word), topik=topik6KWords.get(word)) for word, niklDef in niklWords.items() }
     # fill in any missing defs from Nave
     for word, cd in combinedDefs.items():
         if cd['topik']:
@@ -383,10 +383,13 @@ if __name__ == "__main__":
     wiktionaryDeets = getWiktionaryDeets("~/Dropbox/Documents/한국어/www.korean.go.kr/wiktionary-deets.json", niklWords.keys())
     #
     # get uncombined defs
-    combinedDefs = getCombined("~/Dropbox/Documents/한국어/www.korean.go.kr/combined-defs.json", niklWords, topik6KWords, wiktionaryDeets)
+    cdefsFilename = os.path.expanduser("~/Dropbox/Documents/한국어/www.korean.go.kr/combined-defs.json")
+    combinedDefs = getCombined(cdefsFilename, niklWords, topik6KWords, wiktionaryDeets)
     #
     # generate definitions list
     genDefList(combinedDefs)
+    with open(cdefsFilename, "w") as cdjson:
+        json.dump(combinedDefs, cdjson, indent=2)
     #
     #
     genKAISTSentenceConcordance(combinedDefs, "~/Dropbox/Documents/한국어/www.korean.go.kr/kaist.corpus-60k-sentences-unicode.json")
