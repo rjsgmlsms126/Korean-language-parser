@@ -515,6 +515,10 @@ multiple-clause examples (아/어서, ~면, ...)
 병아리나 물고기도 키워 본 적 없어요?  - gets 키워 본 intermixed wrongly
 
 Fails:
+우리는 타는듯한 태양 아래 있다.
+대충대충하지말고, 잘해라.
+그의 나이로 볼 때, 그는 어려보인다.
+그는 정치에 관심이 없는 듯하다.
 이번 실패는 계획이 꼼꼼하지 않은 탓이다.
 날씨가 더울 테니 따뜻하게 입으렴! - 
 뭔가 모르는 일이 있었나요? - doesnt lile the expansion of the first word to 뭐: NP, 이: VCP, ㄴ가: EC
