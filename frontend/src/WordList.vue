@@ -23,6 +23,9 @@
                 </tr>
             </template>
         </table>
+        <div v-else id="loading">
+            Loading ...
+        </div>
     </div>
 </template>
 
@@ -150,6 +153,12 @@ export default {
 
     .sample-english {
         color: rgb(79, 120, 156);
+    }
+
+    #loading {
+        padding: 30;
+        color: #5e62b9;
+        font-size: 140%;
     }
 
 </style>

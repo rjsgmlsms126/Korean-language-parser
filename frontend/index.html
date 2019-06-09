@@ -9,9 +9,9 @@
         <link rel="stylesheet" type="text/css" href="static/third_party/jquery/jquery-ui-1.12.1.css"/>
         <script type="text/javascript" src="static/third_party/jquery/jquery-ui-1.12.1.js"></script>
         <script>
-            window.app = "{{ app }}"; // "{{ app }}"; // "parser"; //
+            window.app = "{{ app }}"; // "parser"; //
         </script>
-        <title>parser</title>
+        <title>{% if app == "parser" %} Parser {% else %} Word list {% endif %}</title>
     </head>
 
     <body>
