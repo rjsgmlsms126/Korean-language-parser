@@ -4,7 +4,7 @@ Copyright © John Wainwright, 2019.
 The parser implemented in this repo is meant to be
 a learning tool for students of 
 the Korean language.  It is currently accessible online in development form at [http://hangugeo.org/analyzer](http://hangugeo.org/analyzer). 
-It is still very-much a work-in-progress, developed by a non-native-speaking, intermediate-level Korean student as a study aid and so may not give correct or even any parsing for a particular sentence, and may be 
+It is still very-much a work-in-progress, developed by a non-native-speaking Korean language student as a study aid and so may not give correct or even any parsing for a particular sentence, and may be 
 offline at times.
 
 The parser depends on several crucial 3rd-party components, foremost being the [Kakao Hangul Analyzer III](https://github.com/kakao/khaiii) (Khaiii), 
@@ -313,7 +313,7 @@ any of the tags ``MM``, ``NUM.*`` or ``SN`` to match a number terminal.
 
 #### State of the grammar
 The current R-D grammar is certainly incomplete and almost-certainly wrong is several ways, being developed to date by 
-a non-native, intermediate-level Korean language student.  The hope is that open-source contributors with much more extensive Korean experience will help refine & extend the grammar, and add to the common-pattern recognizers & 
+a non-native Korean language student.  The hope is that open-source contributors with much more extensive Korean experience will help refine & extend the grammar, and add to the common-pattern recognizers & 
 reference material in the tag-mapper.
 
 #### Web UI
