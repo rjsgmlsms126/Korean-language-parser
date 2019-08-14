@@ -471,6 +471,16 @@ class Parser(object):
         # for now, just back-tracks lexer
         self.lexer.backTrackTo(marker)
 
+    @grammarRule
+    def unrecognized(self):
+        "in case of parse-failure under grammar, produce degenerate parse just of all terminals in sentence"
+        # allows lexical analysis display, at least
+        self.lexer.backTrackTo(0)
+        nodes = []
+        while not self.lexer.peek(r'.*:SF.*'):
+            nodes.extend(self.lexer.next())
+        return nodes
+
     def parse(self, verbose=0):
         "begin parse, return ParseTree root node"
         self.verbose = verbose
@@ -479,15 +489,17 @@ class Parser(object):
         # check
         result = {}
         if not parsing:
-            # failed altogether
+            # failed altogether, signal but gather degenerate "parse" of all terminals
             self.log('\n*** parse failed')
             result['error'] = "Sorry, failed to parse sentence"
+            result['parseTree'] = self.unrecognized()[0]
         #
         elif not self.lexer.peek(r'.*:SF.*'):
-            # early termination
+            # early termination, signal but gather degenerate "parse" of all terminals
             result['error'] = "Sorry, incomplete parsing"
             self.log('\n*** incomplete parsing, last tried token = ', self.lastTriedToken().__repr__())
             self.log('\nPartial parseTree:\n'); parsing[0].pprint(file=self.logIO)
+            result['parseTree'] = self.unrecognized()[0]
         #
         else:
             # all good

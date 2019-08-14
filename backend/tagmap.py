@@ -593,6 +593,22 @@ tm( # ~고 있다 progressive auxiliary form
     notes="",
 )
 
+tm( # ~ㄹ/을 수 있다 can-do auxiliary form
+    tagPat=r'(ㄹ|을):ETM;수:NNB;있:(VA|VV)', repl=r'\1 수 있:AUX',
+    basePOS="VX", posLabel="Can do\nAuxiliary", descr="Can-do auxiliary verb form",
+    wikiKey="",
+    refs={},
+    notes="",
+)
+
+tm( # ~ㄹ/을 수 없다 can't-do auxiliary form
+    tagPat=r'(ㄹ|을):ETM;수:NNB;없:(VA|VV)', repl=r'\1 수 없:AUX',
+    basePOS="VX", posLabel="Can't do", descr="Can't-do auxiliary verb form",
+    wikiKey="",
+    refs={},
+    notes="",
+)
+
 tm( # V + 아/어 + 야겠다 auxiliary form: had better" or "(I) guess (I) should" or "(I) guess I have to."
     tagPat=r'(아|어|여)야:EC;(하:VX;)*겠:EP', repl=r'\1야겠:AUX',
     basePOS="VX", posLabel="Had better\nAuxiliary", descr="Had better, guess (I) should, ...",
@@ -653,6 +669,14 @@ tm( # ~ㄴ/은가(요) question-ending descriptive-verb suffix
     refs={"htsk": "/unit1/unit-1-lessons-17-25-2/lesson-21-asking-questions-in-korean-why-when-where-and-who/#214",
           "itlk": "/question/457643" },
 )
+
+tm( # ~게 so-that, to-the-extent-where verb suffix
+    tagPat=r'게:EF', repl=r'게:PSXEF',
+    basePOS="EF", posLabel="So that\nSuffix", descr="Adverbial suffix meaning so-that, or to-the-extent-where",
+    wikiKey='',
+    refs={ },
+)
+
 
 # ------------
 

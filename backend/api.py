@@ -236,7 +236,7 @@ def parseInput(input, parser="RD", showAllLevels=False, verbose=1, getWordDefini
                 # parsing failed, return unrecognized token
                 parseTree = references = parseTreeDict = phrases = None
                 s.update(dict(error=result['error'], log=result['log']))
-                log("*** failed, log:")
+                log("*** phrase-parse failed, log:")
                 log(result['log'])
 
         # format debugging daat
